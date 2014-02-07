@@ -3,7 +3,8 @@ CSanquer ColibriCSV
 
 [![Latest Stable Version](https://poser.pugx.org/csanquer/colibri-csv/v/stable.png)](https://packagist.org/packages/csanquer/colibri-csv)
 [![Latest Unstable Version](https://poser.pugx.org/csanquer/colibri-csv/v/unstable.png)](https://packagist.org/packages/csanquer/colibri-csv)
-[![Build Status](https://travis-ci.org/csanquer/colibri-csv.png)](https://travis-ci.org/csanquer/colibri-csv)
+[![Build Status](https://travis-ci.org/csanquer/colibri-csv.png?branch=master)](https://travis-ci.org/csanquer/colibri-csv)
+[![Project Status](http://stillmaintained.com/csanquer/colibri-csv.png)](http://stillmaintained.com/csanquer/colibri-csv)
 
 A lightweight, simple and performant CSV Reader/Writer PHP 5.3 Library, inspired from Python CSV Module.
 Fully Tested, very memory efficient and able to parse/write CSV files that weigh over 100 Mb.
