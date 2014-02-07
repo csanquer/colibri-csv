@@ -74,7 +74,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
     protected function detectEncoding()
     {
         $this->detectedEncoding = $this->dialect->getEncoding();
-        if ($this->dialect->getForceEncodingDetect() || empty($this->detectedEncoding)) {
+        if ($this->dialect->getForceEncodingDetection() || empty($this->detectedEncoding)) {
             //only read the 100 first lines to detect encoding to improve performance
             $text = '';
             $line = 0;

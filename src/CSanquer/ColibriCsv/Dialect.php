@@ -155,7 +155,7 @@ class Dialect
         $this->setTranslit($options['translit']);
         $this->setUseBom($options['bom']);
         $this->setTrim($options['trim']);
-        $this->setForceEncodingDetect($options['force_encoding_detect']);
+        $this->setForceEncodingDetection($options['force_encoding_detect']);
         $this->setSkipEmptyLines($options['skip_empty']);
     }
 
@@ -431,19 +431,19 @@ class Dialect
      *
      * @return bool
      */
-    public function getForceEncodingDetect()
+    public function getForceEncodingDetection()
     {
-        return $this->forceEncodingDetect;
+        return $this->forceEncodingDetection;
     }
 
     /**
      *
-     * @param  bool                         $forceEncodingDetect
+     * @param  bool                         $forceEncodingDetection
      * @return \CSanquer\ColibriCsv\Dialect
      */
-    public function setForceEncodingDetect($forceEncodingDetect)
+    public function setForceEncodingDetection($forceEncodingDetection)
     {
-        $this->forceEncodingDetect = (bool) $forceEncodingDetect;
+        $this->forceEncodingDetection = (bool) $forceEncodingDetection;
 
         return $this;
     }

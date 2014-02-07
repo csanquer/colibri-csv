@@ -49,7 +49,7 @@ class DialectTest extends AbstractCsvTestCase
                     'escape' => "\\",
                     'use_bom' => false,
                     'translit' => 'translit',
-                    'force_encoding_detect' => false,
+                    'force_encoding_detection' => false,
                     'skip_empty_lines' => false,
                     'trim' => false,
                 ),
@@ -63,7 +63,7 @@ class DialectTest extends AbstractCsvTestCase
                     'escape' => "\\",
                     'bom' => false,
                     'translit' => 'translit',
-                    'force_encoding_detect' => false,
+                    'force_encoding_detection' => false,
                     'skip_empty' => true,
                     'trim' => true,
                 ),
@@ -75,7 +75,7 @@ class DialectTest extends AbstractCsvTestCase
                     'escape' => "\\",
                     'use_bom' => false,
                     'translit' => 'translit',
-                    'force_encoding_detect' => false,
+                    'force_encoding_detection' => false,
                     'skip_empty_lines' => true,
                     'trim' => true,
                 ),
@@ -110,7 +110,7 @@ class DialectTest extends AbstractCsvTestCase
                     'escape_double' => true,
                     'use_bom' => false,
                     'translit' => 'translit',
-                    'force_encoding_detect' => false,
+                    'force_encoding_detection' => false,
                     'skip_empty_lines' => false,
                     'trim' => false,
                 ),
@@ -126,7 +126,7 @@ class DialectTest extends AbstractCsvTestCase
                     'escape_double' => true,
                     'use_bom' => false,
                     'translit' => 'translit',
-                    'force_encoding_detect' => false,
+                    'force_encoding_detection' => false,
                     'skip_empty_lines' => false,
                     'trim' => false,
                 ),
@@ -384,15 +384,15 @@ class DialectTest extends AbstractCsvTestCase
     }
 
     /**
-     * @dataProvider providerGetSetForceEncodingDetect
+     * @dataProvider providerGetSetForceEncodingDetection
      */
-    public function testGetSetForceEncodingDetect($input, $expected)
+    public function testGetSetForceEncodingDetection($input, $expected)
     {
-        $this->assertInstanceOf('CSanquer\ColibriCsv\Dialect', $this->dialect->setForceEncodingDetect($input));
-        $this->assertEquals($expected, $this->dialect->getForceEncodingDetect());
+        $this->assertInstanceOf('CSanquer\ColibriCsv\Dialect', $this->dialect->setForceEncodingDetection($input));
+        $this->assertEquals($expected, $this->dialect->getForceEncodingDetection());
     }
 
-    public function providerGetSetForceEncodingDetect()
+    public function providerGetSetForceEncodingDetection()
     {
         return array(
             array(null, false),
