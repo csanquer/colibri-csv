@@ -1,5 +1,5 @@
 vendor
-coverage
+build
 composer.lock
 phpunit.xml
 /tests/tmp
