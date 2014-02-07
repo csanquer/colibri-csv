@@ -202,14 +202,12 @@ class Dialect
             case 'unix':
             case 'linux';
             case "\n";
-            default:
                 $this->eol = "\n";
                 break;
 
             case 'mac':
             case 'macos';
             case "\r";
-            default:
                 $this->eol = "\r";
                 break;
 
