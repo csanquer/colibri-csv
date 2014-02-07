@@ -4,7 +4,7 @@ namespace CSanquer\ColibriCsv\Utility;
 
 /**
  * Converter Utility class based on code from PHPExcel_Shared_String
- * 
+ *
  * @codeCoverageIgnore
  * @author Charles SANQUER - <charles.sanquer@gmail.com>
  */
@@ -156,9 +156,9 @@ class Converter
                 return $value;
             }
             if ($from == 'UTF-16LE') {
-                return self::utf16_decode($value, false);
+                return self::utf16Decode($value, false);
             } elseif ($from == 'UTF-16BE') {
-                return self::utf16_decode($value);
+                return self::utf16Decode($value);
             }
         }
 
@@ -180,7 +180,7 @@ class Converter
      * @author  Rasmus Andersson {@link http://rasmusandersson.se/}
      * @author vadik56
      */
-    public static function utf16_decode($str, $bom_be = true)
+    public static function utf16Decode($str, $bom_be = true)
     {
         if (strlen($str) < 2)
             return $str;
