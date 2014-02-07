@@ -4,7 +4,8 @@ namespace CSanquer\ColibriCsv\Utility;
 
 /**
  * Converter Utility class based on code from PHPExcel_Shared_String
- *
+ * 
+ * @codeCoverageIgnore
  * @author Charles SANQUER - <charles.sanquer@gmail.com>
  */
 class Converter
@@ -23,7 +24,6 @@ class Converter
      */
     private static $iconvEnabled;
 
-    // @codeCoverageIgnoreStart
     /**
      * detect if mbstring is available
      *
@@ -43,8 +43,6 @@ class Converter
         return self::$mbstringEnabled;
     }
 
-    // @codeCoverageIgnoreEnd
-    // @codeCoverageIgnoreStart
     /**
      * detect if iconv is available
      *
@@ -86,8 +84,6 @@ class Converter
 
         return self::$iconvEnabled;
     }
-    // @codeCoverageIgnoreEnd
-    // @codeCoverageIgnoreStart
 
     /**
      *
@@ -127,8 +123,6 @@ class Converter
         return $encoding ? $encoding : $fallback;
     }
 
-    // @codeCoverageIgnoreEnd
-    // @codeCoverageIgnoreStart
     /**
      * Convert string from one encoding to another. First try iconv, then mbstring, or no convertion
      *
@@ -171,8 +165,6 @@ class Converter
         return $value;
     }
 
-    // @codeCoverageIgnoreEnd
-    // @codeCoverageIgnoreStart
     /**
      * Decode UTF-16 encoded strings.
      *
@@ -215,5 +207,4 @@ class Converter
 
         return $newstr;
     }
-    // @codeCoverageIgnoreEnd
 }
