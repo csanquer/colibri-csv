@@ -64,6 +64,16 @@ class AbstractCsvTest extends AbstractCsvTestCase
         );
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage 
+     */
+    public function testSetFileWithIncorrectResource()
+    {
+        $xmlParser = xml_parser_create(); 
+        $this->structure->setFile($xmlParser);
+    }
+    
     public function testGetSetFilename()
     {
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->setFilename(__DIR__.'/../Fixtures/test1.csv'));

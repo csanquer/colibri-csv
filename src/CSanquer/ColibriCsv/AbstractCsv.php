@@ -115,7 +115,11 @@ abstract class AbstractCsv
      */
     public function setFile($file)
     {
-        if (is_resource($file) && get_resource_type($file) == 'stream') {
+        if (is_resource($file)) {
+            if (get_resource_type($file) !== 'stream') {
+                throw new \InvalidArgumentException('The file resource must be valid stream resource.');
+            }
+            
             $streamMeta = stream_get_meta_data($file);
             $mode = $streamMeta['mode'];
             $this->checkFileHandleMode($mode);
@@ -205,12 +209,12 @@ abstract class AbstractCsv
         if (!$this->isFileOpened()) {
             $mode = empty($mode) ? 'rb' : $mode;
             $this->fileHandler = @fopen($this->filename, $mode);
-            if ($this->fileHandler === false) {
+            if (!$this->isFileOpened()) {
                 $modeLabel = $this instanceof CsvReader ? self::MODE_READING : self::MODE_WRITING;
                 throw new \InvalidArgumentException('Could not open file "'.$this->filename.'" for '.$modeLabel.'.');
             }
         }
-
+        
         return $this->fileHandler;
     }
 

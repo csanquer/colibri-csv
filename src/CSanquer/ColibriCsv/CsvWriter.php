@@ -142,9 +142,7 @@ class CsvWriter extends AbstractCsv
      */
     public function writeRow(array $values)
     {
-        if (!$this->isFileOpened()) {
-            $this->openFile($this->fileHandlerMode);
-        }
+        $this->openFile($this->fileHandlerMode);
 
         return $this->write($this->getFileHandler(), $values);
     }
