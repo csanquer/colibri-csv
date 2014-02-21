@@ -30,6 +30,7 @@ class CsvReaderTest extends AbstractCsvTestCase
 
     /**
      * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Could not open file "" for reading.
      */
     public function testReadingNoFilename()
     {
@@ -41,6 +42,7 @@ class CsvReaderTest extends AbstractCsvTestCase
 
     /**
      * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage A valid file handler resource must be passed as parameter.
      */
     public function testReadingNoFileHandler()
     {
@@ -49,6 +51,7 @@ class CsvReaderTest extends AbstractCsvTestCase
 
     /**
      * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The file "foobar.csv" does not exists.
      */
     public function testReadingFilenameInvalid()
     {

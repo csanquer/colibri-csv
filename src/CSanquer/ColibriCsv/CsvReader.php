@@ -52,9 +52,10 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
     public function __construct($options = array())
     {
         parent::__construct($options);
+        $this->mode = self::MODE_READING;
         $this->fileHandlerMode = 'rb';
     }
-
+    
     /**
      *
      * @param  string                         $filename
@@ -100,7 +101,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
     {
         $row = null;
         if (!is_resource($fileHandler)) {
-            throw new \InvalidArgumentException('A valid file handler resource must be passed as parameter');
+            throw new \InvalidArgumentException('A valid file handler resource must be passed as parameter.');
         }
 
         if (!feof($fileHandler)) {

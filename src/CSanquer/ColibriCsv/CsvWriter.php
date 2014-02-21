@@ -30,9 +30,10 @@ class CsvWriter extends AbstractCsv
     public function __construct($options = array())
     {
         parent::__construct($options);
+        $this->mode = self::MODE_WRITING;
         $this->fileHandlerMode = 'wb';
     }
-
+    
     /**
      * open a csv file to write
      *
@@ -61,7 +62,6 @@ class CsvWriter extends AbstractCsv
         );
     }
 
-    // @codeCoverageIgnoreStart
     /**
      * echo HTTP headers for streaming CSV file
      *
@@ -69,13 +69,11 @@ class CsvWriter extends AbstractCsv
      */
     public function createHttpHeaders($filename)
     {
-
         $headers = $this->getHttpHeaders($filename);
         foreach ($headers as $key => $value) {
             header($key.': '.$value);
         }
     }
-    // @codeCoverageIgnoreEnd
 
     /**
      *

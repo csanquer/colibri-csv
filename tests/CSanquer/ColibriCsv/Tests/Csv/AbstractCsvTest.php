@@ -67,7 +67,7 @@ class AbstractCsvTest extends AbstractCsvTestCase
 
         return $this->structure;
     }
-
+    
     public function testOpenNewFile()
     {
         $file1 = __DIR__.'/../Fixtures/test1.csv';

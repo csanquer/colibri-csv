@@ -11,6 +11,9 @@ use CSanquer\ColibriCsv\Utility\Converter;
  */
 abstract class AbstractCsv
 {
+    CONST MODE_READING = 'reading';
+    CONST MODE_WRITING = 'writing';
+    
     /**
      *
      * @var Dialect
@@ -29,6 +32,12 @@ abstract class AbstractCsv
      */
     protected $fileHandlerMode;
 
+    /**
+     *
+     * @var string
+     */
+    protected $mode;
+    
     /**
      *
      * @var resource
@@ -66,18 +75,30 @@ abstract class AbstractCsv
 
         return $this;
     }
-
+    
+    /**
+     * 
+     * @deprecated since version 1.0.2 use setFile instead
+     * 
+     * @param string $filename
+     * @return \CSanquer\ColibriCsv\AbstractCsv
+     */
+    public function setFilename($filename)
+    {
+        return $this->setFile($filename);
+    }
+    
     /**
      *
      * @param  string                           $filename
      * @return \CSanquer\ColibriCsv\AbstractCsv
      */
-    public function setFilename($filename)
+    public function setFile($filename)
     {
         if ($this->fileHandlerMode == 'rb' && !file_exists($filename)) {
-            throw new \InvalidArgumentException('The file '.$filename.' does not exists.');
+            throw new \InvalidArgumentException('The file "'.$filename.'" does not exists.');
         }
-
+        
         if ($this->isFileOpened() && $filename != $this->filename) {
             $this->closeFile();
         }
@@ -96,6 +117,15 @@ abstract class AbstractCsv
         return $this->filename;
     }
 
+    /**
+     *
+     * @return resource stream
+     */
+    public function getFileHandler()
+    {
+        return $this->fileHandler;
+    }
+    
     /**
      * Write UTF-8 BOM code if encoding is UTF-8 and useBom is set to true
      *
@@ -147,8 +177,8 @@ abstract class AbstractCsv
 
         $this->fileHandler = @fopen($this->filename, $mode);
         if ($this->fileHandler === false) {
-            $modeLabel = (strpos('r', $mode) !== false && strpos('+', $mode) === false) ? 'reading' : 'writing';
-            throw new \InvalidArgumentException('Could not open file '.$this->filename.' for '.$modeLabel.'.');
+            $modeLabel = $this instanceof CsvReader ? self::MODE_READING : self::MODE_WRITING;
+            throw new \InvalidArgumentException('Could not open file "'.$this->filename.'" for '.$modeLabel.'.');
         }
 
         return $this->fileHandler;
@@ -172,22 +202,13 @@ abstract class AbstractCsv
 
     /**
      *
-     * check if a file is already opened
+     * check if a file is already opened and is a stream
      *
      * @return boolean
      */
     public function isFileOpened()
     {
-        return is_resource($this->fileHandler);
-    }
-
-    /**
-     *
-     * @return resource
-     */
-    protected function getFileHandler()
-    {
-        return $this->fileHandler;
+        return is_resource($this->fileHandler) && get_resource_type($this->fileHandler) == 'stream';
     }
 
     /**
