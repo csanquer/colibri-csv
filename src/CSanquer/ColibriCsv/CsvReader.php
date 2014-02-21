@@ -218,6 +218,8 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
         if ($this->dialect->getSkipEmptyLines() && $this->currentValues === false) {
             $this->next();
         }
+        
+        return $this->currentValues;
     }
 
     public function rewind()

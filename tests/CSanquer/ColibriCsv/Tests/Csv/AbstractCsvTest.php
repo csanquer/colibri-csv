@@ -41,21 +41,30 @@ class AbstractCsvTest extends AbstractCsvTestCase
     }
 
     /**
-     * @dataProvider providerGetSetFilename
+     * @dataProvider providerGetSetFile
      */
-    public function testGetSetFilename($input, $expected)
+    public function testGetSetFile($input, $expected, $expectedResource = false)
     {
-        $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->setFilename($input));
+        $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->setFile($input));
         $this->assertEquals($expected, $this->structure->getFilename());
+        if ($expectedResource) {
+            $this->assertInternalType('resource', $this->structure->getFileHandler());
+        }
     }
 
-    public function providerGetSetFilename()
+    public function providerGetSetFile()
     {
         return array(
             array(null, null),
             array('', ''),
-            array(__DIR__.'/../Fixtures/test1.csv', __DIR__.'/../Fixtures/test1.csv'),
+            array(__DIR__.'/../Fixtures/test1.csv', __DIR__.'/../Fixtures/test1.csv', false),
         );
+    }
+    
+    public function testGetSetFilename()
+    {
+        $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->setFilename(__DIR__.'/../Fixtures/test1.csv'));
+        $this->assertEquals(__DIR__.'/../Fixtures/test1.csv', $this->structure->getFilename());
     }
 
     public function testOpen()

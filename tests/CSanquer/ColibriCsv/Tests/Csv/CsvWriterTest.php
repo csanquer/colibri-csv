@@ -152,7 +152,7 @@ class CsvWriterTest extends AbstractCsvTestCase
 
         $this->writer = new CsvWriter($options);
 
-        $this->assertInstanceOf('CSanquer\ColibriCsv\CsvWriter', $this->writer->setFilename($filename));
+        $this->assertInstanceOf('CSanquer\ColibriCsv\CsvWriter', $this->writer->setFile($filename));
         $this->assertInstanceOf('CSanquer\ColibriCsv\CsvWriter', $this->writer->writeRows($rows));
         $this->assertEquals($expectedCsv, file_get_contents($filename));
         $this->assertInstanceOf('CSanquer\ColibriCsv\CsvWriter', $this->writer->close());

@@ -95,7 +95,7 @@ abstract class AbstractCsv
      */
     public function setFile($filename)
     {
-        if ($this->fileHandlerMode == 'rb' && !file_exists($filename)) {
+        if ($this->mode == self::MODE_READING && !file_exists($filename)) {
             throw new \InvalidArgumentException('The file "'.$filename.'" does not exists.');
         }
         

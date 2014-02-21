@@ -40,6 +40,39 @@ class CsvReaderTest extends AbstractCsvTestCase
         }
     }
 
+    public function testIteratorMethodsWithoutOpen()
+    {
+        $expected = array(
+            array('nom', 'prénom', 'age'),
+            array('Martin', 'Durand', '28'),
+            array('Alain', 'Richard', '36'),
+        );
+        
+        $reader = new CsvReader(array(
+            'delimiter' => ',',
+            'enclosure' => '"',
+            'encoding' => 'UTF-8',
+            'eol' => "\n",
+            'escape' => "\\",
+            'bom' => false,
+            'translit' => 'translit',
+            'force_encoding_detect' => false,
+            'skip_empty' => false,
+            'trim' => false,
+        ));
+        
+        $reader->setFile(__DIR__.'/../Fixtures/test1.csv');
+        
+        $actual = array();
+        $reader->rewind();
+        while($reader->valid()) {
+            $actual[$reader->key()] = $reader->current();
+            $reader->next();
+        }
+        
+        $this->assertEquals($expected, $actual);
+    }
+    
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage A valid file handler resource must be passed as parameter.
