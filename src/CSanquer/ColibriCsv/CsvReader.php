@@ -55,6 +55,11 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
         $this->mode = self::MODE_READING;
         $this->fileHandlerMode = 'rb';
     }
+
+    protected function getCompatibleFileHanderModes()
+    {
+        return array('rb', 'r+b', 'w+b', 'a+b', 'x+b', 'c+b');
+    }
     
     /**
      *
@@ -224,12 +229,10 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
 
     public function rewind()
     {
-        if (!$this->isFileOpened()) {
-            $this->openFile($this->fileHandlerMode);
-        }
-
-        $this->position = 0;
+        $this->openFile($this->fileHandlerMode);
         rewind($this->getFileHandler());
+        
+        $this->position = 0;
         $this->currentValues = $this->readLine($this->getFileHandler());
         if ($this->dialect->getSkipEmptyLines() && $this->currentValues === false) {
             $this->next();
@@ -250,13 +253,10 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
     /******************************************************************************/
     public function count()
     {
-        if (!$this->isFileOpened()) {
-            $this->openFile($this->fileHandlerMode);
-        }
-
-        $count = 0;
+        $this->openFile($this->fileHandlerMode);
         rewind($this->getFileHandler());
 
+        $count = 0;
         $enclosure = $this->dialect->getEnclosure();
         $escape = $this->dialect->getEscape();
         $delimiter = $this->dialect->getDelimiter();

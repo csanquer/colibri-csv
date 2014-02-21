@@ -33,6 +33,11 @@ class CsvWriter extends AbstractCsv
         $this->mode = self::MODE_WRITING;
         $this->fileHandlerMode = 'wb';
     }
+
+    protected function getCompatibleFileHanderModes()
+    {
+        return array('wb', 'r+b', 'w+b', 'a+b', 'x+b', 'c+b');
+    }
     
     /**
      * open a csv file to write

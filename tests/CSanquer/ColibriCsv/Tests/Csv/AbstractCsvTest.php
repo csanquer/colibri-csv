@@ -22,6 +22,9 @@ class AbstractCsvTest extends AbstractCsvTestCase
     protected function setUp()
     {
         $this->structure = $this->getMockForAbstractClass('CSanquer\ColibriCsv\AbstractCsv');
+        $this->structure->expects($this->any())
+             ->method('getCompatibleFileHanderModes')
+             ->will($this->returnValue(array('rb', 'wb', 'r+b', 'w+b', 'a+b', 'x+b', 'c+b')));
     }
 
     /**
@@ -75,6 +78,26 @@ class AbstractCsvTest extends AbstractCsvTestCase
         $this->assertInternalType('resource', $this->getFileHandlerValue($this->structure));
 
         return $this->structure;
+    }
+
+    public function testOpenFileHandler()
+    {
+        $csv = <<<CSV
+nom,prénom,age
+Martin,Durand,"28"
+Alain,Richard,"36"
+CSV;
+
+        $stream = fopen('php://memory','r+');
+        fwrite($stream, $csv);
+        rewind($stream);
+        
+        $this->assertFalse($this->structure->isFileOpened());
+        $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open($stream));
+        $this->assertTrue($this->structure->isFileOpened());
+        $this->assertInternalType('resource', $this->getFileHandlerValue($this->structure));
+        $this->assertEquals($csv, stream_get_contents($this->getFileHandlerValue($this->structure)));
+
     }
     
     public function testOpenNewFile()

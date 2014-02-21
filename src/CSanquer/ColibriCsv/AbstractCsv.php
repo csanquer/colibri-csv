@@ -61,6 +61,26 @@ abstract class AbstractCsv
     }
 
     /**
+     * @return array compatible file handler modes
+     */
+    abstract protected function getCompatibleFileHanderModes();
+    
+    /**
+     * 
+     * check if a file handle mode is allowed
+     * 
+     * @param string $mode
+     * 
+     * @throws \InvalidArgumentException
+     */
+    protected function checkFileHandleMode($mode)
+    {
+        if (!in_array($mode, $this->getCompatibleFileHanderModes())) {
+            throw new \InvalidArgumentException('The file handler mode "'.$mode.'" is not valid. Allowed modes : "'.implode('", "', $this->getCompatibleFileHanderModes()).'".');
+        }
+    }
+    
+    /**
      *
      * @return Dialect
      */
@@ -80,7 +100,7 @@ abstract class AbstractCsv
      * 
      * @deprecated since version 1.0.2 use setFile instead
      * 
-     * @param string $filename
+     * @param strin|resource $filename filename or stream resource
      * @return \CSanquer\ColibriCsv\AbstractCsv
      */
     public function setFilename($filename)
@@ -90,20 +110,29 @@ abstract class AbstractCsv
     
     /**
      *
-     * @param  string                           $filename
+     * @param  string|resource                           $file filename or stream resource
      * @return \CSanquer\ColibriCsv\AbstractCsv
      */
-    public function setFile($filename)
+    public function setFile($file)
     {
-        if ($this->mode == self::MODE_READING && !file_exists($filename)) {
-            throw new \InvalidArgumentException('The file "'.$filename.'" does not exists.');
-        }
-        
-        if ($this->isFileOpened() && $filename != $this->filename) {
-            $this->closeFile();
+        if (is_resource($file) && get_resource_type($file) == 'stream') {
+            $streamMeta = stream_get_meta_data($file);
+            $mode = $streamMeta['mode'];
+            $this->checkFileHandleMode($mode);
+            $this->fileHandler = $file;
+            $this->fileHandlerMode = $mode;
+            $file = $streamMeta['uri'];
+        } else {
+            if ($this->mode == self::MODE_READING && !file_exists($file)) {
+                throw new \InvalidArgumentException('The file "'.$file.'" does not exists.');
+            }
+
+            if ($this->isFileOpened() && $file != $this->filename) {
+                $this->closeFile();
+            }
         }
 
-        $this->filename = $filename;
+        $this->filename = $file;
 
         return $this;
     }
@@ -173,12 +202,13 @@ abstract class AbstractCsv
      */
     protected function openFile($mode = 'rb')
     {
-        $mode = empty($mode) ? 'rb' : $mode;
-
-        $this->fileHandler = @fopen($this->filename, $mode);
-        if ($this->fileHandler === false) {
-            $modeLabel = $this instanceof CsvReader ? self::MODE_READING : self::MODE_WRITING;
-            throw new \InvalidArgumentException('Could not open file "'.$this->filename.'" for '.$modeLabel.'.');
+        if (!$this->isFileOpened()) {
+            $mode = empty($mode) ? 'rb' : $mode;
+            $this->fileHandler = @fopen($this->filename, $mode);
+            if ($this->fileHandler === false) {
+                $modeLabel = $this instanceof CsvReader ? self::MODE_READING : self::MODE_WRITING;
+                throw new \InvalidArgumentException('Could not open file "'.$this->filename.'" for '.$modeLabel.'.');
+            }
         }
 
         return $this->fileHandler;
@@ -214,14 +244,14 @@ abstract class AbstractCsv
     /**
      * open a csv file to read or write
      *
-     * @param  string                           $filename default = null
+     * @param  string|resource|null                           $filename filename or stream resource, default = null
      * @return \CSanquer\ColibriCsv\AbstractCsv
      *
      * @throws \InvalidArgumentException
      */
-    public function open($filename = null)
+    public function open($file = null)
     {
-        $this->setFilename($filename);
+        $this->setFile($file);
         $this->openFile($this->fileHandlerMode);
 
         return $this;

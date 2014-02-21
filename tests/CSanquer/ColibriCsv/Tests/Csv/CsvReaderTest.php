@@ -689,4 +689,85 @@ class CsvReaderTest extends AbstractCsvTestCase
             ),
         );
     }
+    
+    public function testReadingExistingFileHandler()
+    {
+        $csv = <<<CSV
+nom,prénom,age
+Martin,Durand,"28"
+Alain,Richard,"36"
+CSV;
+
+        $expected = array(
+            array('nom', 'prénom', 'age'),
+            array('Martin', 'Durand', '28'),
+            array('Alain', 'Richard', '36'),
+        );
+        
+        $stream = fopen('php://memory','r+b');
+        fwrite($stream, $csv);
+        rewind($stream);
+        
+        $reader = new CsvReader(array(
+            'delimiter' => ',',
+            'enclosure' => '"',
+            'encoding' => 'UTF-8',
+            'eol' => "\n",
+            'escape' => "\\",
+            'bom' => false,
+            'translit' => 'translit',
+            'force_encoding_detect' => false,
+            'skip_empty' => false,
+            'trim' => false,
+        ));
+        
+        $this->assertFalse($reader->isFileOpened());
+        $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvReader', $reader->open($stream));
+        $this->assertTrue($reader->isFileOpened());
+        $this->assertInternalType('resource', $this->getFileHandlerValue($reader));
+        
+        $actual = array();
+        foreach ($reader as $row) {
+            $actual[] = $row;
+        }
+        
+        $this->assertEquals($expected, $actual);
+    }
+   
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The file handler mode "wb" is not valid. Allowed modes : "rb", "r+b", "w+b", "a+b", "x+b", "c+b".
+     */
+    public function testReadingExistingFileHandlerWithInvalidMode()
+    {
+        $filename = __DIR__.'/../Fixtures/testReadStream1.csv';
+        
+        if (file_exists($filename)) {
+            unlink($filename);
+        }
+        
+        $expected = array(
+            array('nom', 'prénom', 'age'),
+            array('Martin', 'Durand', '28'),
+            array('Alain', 'Richard', '36'),
+        );
+        
+        $stream = fopen($filename,'wb');
+        
+        $reader = new CsvReader(array(
+            'delimiter' => ',',
+            'enclosure' => '"',
+            'encoding' => 'UTF-8',
+            'eol' => "\n",
+            'escape' => "\\",
+            'bom' => false,
+            'translit' => 'translit',
+            'force_encoding_detect' => false,
+            'skip_empty' => false,
+            'trim' => false,
+        ));
+        
+        $this->assertFalse($reader->isFileOpened());
+        $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvReader', $reader->open($stream));
+    }
 }
