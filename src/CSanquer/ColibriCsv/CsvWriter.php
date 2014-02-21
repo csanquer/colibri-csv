@@ -38,16 +38,16 @@ class CsvWriter extends AbstractCsv
     {
         return array('wb', 'r+b', 'w+b', 'a+b', 'x+b', 'c+b');
     }
-    
+
     /**
      * open a csv file to write
      *
-     * @param  string                           $filename default = null
-     * @return \CSanquer\ColibriCsv\AbstractCsv
+     * @param  string|resource $file filename or stream resource, default = null
+     * @return AbstractCsv
      */
-    public function open($filename = null)
+    public function open($file = null)
     {
-        parent::open($filename);
+        parent::open($file);
         $this->writeBom();
 
         return $this;
@@ -85,7 +85,7 @@ class CsvWriter extends AbstractCsv
      * @param resource $fileHandler
      * @param array    $values
      *
-     * @return \CSanquer\ColibriCsv\CsvWriter
+     * @return CsvWriter
      *
      * @throws \InvalidArgumentException
      */
@@ -138,7 +138,7 @@ class CsvWriter extends AbstractCsv
      *
      * @param array $values
      *
-     * @return \CSanquer\ColibriCsv\CsvWriter
+     * @return CsvWriter
      */
     public function writeRow(array $values)
     {
@@ -154,7 +154,7 @@ class CsvWriter extends AbstractCsv
      *
      * @param array rows (multiple arrays of values)
      *
-     * @return \CSanquer\ColibriCsv\CsvWriter
+     * @return CsvWriter
      */
     public function writeRows(array $rows)
     {

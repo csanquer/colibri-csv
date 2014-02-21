@@ -47,7 +47,7 @@ class CsvReaderTest extends AbstractCsvTestCase
             array('Martin', 'Durand', '28'),
             array('Alain', 'Richard', '36'),
         );
-        
+
         $reader = new CsvReader(array(
             'delimiter' => ',',
             'enclosure' => '"',
@@ -60,19 +60,19 @@ class CsvReaderTest extends AbstractCsvTestCase
             'skip_empty' => false,
             'trim' => false,
         ));
-        
+
         $reader->setFile(__DIR__.'/../Fixtures/test1.csv');
-        
+
         $actual = array();
         $reader->rewind();
-        while($reader->valid()) {
+        while ($reader->valid()) {
             $actual[$reader->key()] = $reader->current();
             $reader->next();
         }
-        
+
         $this->assertEquals($expected, $actual);
     }
-    
+
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage A valid file handler resource must be passed as parameter.
@@ -689,7 +689,7 @@ class CsvReaderTest extends AbstractCsvTestCase
             ),
         );
     }
-    
+
     public function testReadingExistingFileHandler()
     {
         $csv = <<<CSV
@@ -703,11 +703,11 @@ CSV;
             array('Martin', 'Durand', '28'),
             array('Alain', 'Richard', '36'),
         );
-        
+
         $stream = fopen('php://memory','r+b');
         fwrite($stream, $csv);
         rewind($stream);
-        
+
         $reader = new CsvReader(array(
             'delimiter' => ',',
             'enclosure' => '"',
@@ -720,20 +720,20 @@ CSV;
             'skip_empty' => false,
             'trim' => false,
         ));
-        
+
         $this->assertFalse($reader->isFileOpened());
         $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvReader', $reader->open($stream));
         $this->assertTrue($reader->isFileOpened());
         $this->assertInternalType('resource', $this->getFileHandlerValue($reader));
-        
+
         $actual = array();
         foreach ($reader as $row) {
             $actual[] = $row;
         }
-        
+
         $this->assertEquals($expected, $actual);
     }
-   
+
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage The file handler mode "wb" is not valid. Allowed modes : "rb", "r+b", "w+b", "a+b", "x+b", "c+b".
@@ -741,19 +741,19 @@ CSV;
     public function testReadingExistingFileHandlerWithInvalidMode()
     {
         $filename = __DIR__.'/../Fixtures/testReadStream1.csv';
-        
+
         if (file_exists($filename)) {
             unlink($filename);
         }
-        
+
         $expected = array(
             array('nom', 'prénom', 'age'),
             array('Martin', 'Durand', '28'),
             array('Alain', 'Richard', '36'),
         );
-        
+
         $stream = fopen($filename,'wb');
-        
+
         $reader = new CsvReader(array(
             'delimiter' => ',',
             'enclosure' => '"',
@@ -766,7 +766,7 @@ CSV;
             'skip_empty' => false,
             'trim' => false,
         ));
-        
+
         $this->assertFalse($reader->isFileOpened());
         $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvReader', $reader->open($stream));
     }

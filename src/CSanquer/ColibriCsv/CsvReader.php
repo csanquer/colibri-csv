@@ -2,7 +2,7 @@
 
 namespace CSanquer\ColibriCsv;
 
-use \CSanquer\ColibriCsv\Utility\Converter;
+use CSanquer\ColibriCsv\Utility\Converter;
 
 /**
  * Csv Reader
@@ -60,15 +60,16 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
     {
         return array('rb', 'r+b', 'w+b', 'a+b', 'x+b', 'c+b');
     }
-    
+
     /**
+     * open a csv file to read
      *
-     * @param  string                         $filename
-     * @return \CSanquer\ColibriCsv\CsvReader
+     * @param  string|resource $file filename or stream resource, default = null
+     * @return CsvReader
      */
-    public function open($filename = null)
+    public function open($file = null)
     {
-        parent::open($filename);
+        parent::open($file);
         $this->detectEncoding();
 
         return $this;
@@ -223,7 +224,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
         if ($this->dialect->getSkipEmptyLines() && $this->currentValues === false) {
             $this->next();
         }
-        
+
         return $this->currentValues;
     }
 
@@ -231,7 +232,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
     {
         $this->openFile($this->fileHandlerMode);
         rewind($this->getFileHandler());
-        
+
         $this->position = 0;
         $this->currentValues = $this->readLine($this->getFileHandler());
         if ($this->dialect->getSkipEmptyLines() && $this->currentValues === false) {

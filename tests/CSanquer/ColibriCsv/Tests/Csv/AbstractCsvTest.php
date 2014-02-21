@@ -63,7 +63,7 @@ class AbstractCsvTest extends AbstractCsvTestCase
             array(__DIR__.'/../Fixtures/test1.csv', __DIR__.'/../Fixtures/test1.csv', false),
         );
     }
-    
+
     public function testGetSetFilename()
     {
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->setFilename(__DIR__.'/../Fixtures/test1.csv'));
@@ -91,7 +91,7 @@ CSV;
         $stream = fopen('php://memory','r+');
         fwrite($stream, $csv);
         rewind($stream);
-        
+
         $this->assertFalse($this->structure->isFileOpened());
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open($stream));
         $this->assertTrue($this->structure->isFileOpened());
@@ -99,7 +99,7 @@ CSV;
         $this->assertEquals($csv, stream_get_contents($this->getFileHandlerValue($this->structure)));
 
     }
-    
+
     public function testOpenNewFile()
     {
         $file1 = __DIR__.'/../Fixtures/test1.csv';

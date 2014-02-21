@@ -13,7 +13,7 @@ abstract class AbstractCsv
 {
     CONST MODE_READING = 'reading';
     CONST MODE_WRITING = 'writing';
-    
+
     /**
      *
      * @var Dialect
@@ -37,7 +37,7 @@ abstract class AbstractCsv
      * @var string
      */
     protected $mode;
-    
+
     /**
      *
      * @var resource
@@ -64,13 +64,13 @@ abstract class AbstractCsv
      * @return array compatible file handler modes
      */
     abstract protected function getCompatibleFileHanderModes();
-    
+
     /**
-     * 
+     *
      * check if a file handle mode is allowed
-     * 
+     *
      * @param string $mode
-     * 
+     *
      * @throws \InvalidArgumentException
      */
     protected function checkFileHandleMode($mode)
@@ -79,7 +79,7 @@ abstract class AbstractCsv
             throw new \InvalidArgumentException('The file handler mode "'.$mode.'" is not valid. Allowed modes : "'.implode('", "', $this->getCompatibleFileHanderModes()).'".');
         }
     }
-    
+
     /**
      *
      * @return Dialect
@@ -95,23 +95,23 @@ abstract class AbstractCsv
 
         return $this;
     }
-    
+
     /**
-     * 
+     *
      * @deprecated since version 1.0.2 use setFile instead
-     * 
-     * @param strin|resource $filename filename or stream resource
-     * @return \CSanquer\ColibriCsv\AbstractCsv
+     *
+     * @param  string|resource $filename filename or stream resource
+     * @return AbstractCsv
      */
     public function setFilename($filename)
     {
         return $this->setFile($filename);
     }
-    
+
     /**
      *
-     * @param  string|resource                           $file filename or stream resource
-     * @return \CSanquer\ColibriCsv\AbstractCsv
+     * @param  string|resource $file filename or stream resource
+     * @return AbstractCsv
      */
     public function setFile($file)
     {
@@ -154,11 +154,11 @@ abstract class AbstractCsv
     {
         return $this->fileHandler;
     }
-    
+
     /**
      * Write UTF-8 BOM code if encoding is UTF-8 and useBom is set to true
      *
-     * @return \CSanquer\ColibriCsv\AbstractCsv
+     * @return AbstractCsv
      */
     protected function writeBom()
     {
@@ -244,8 +244,8 @@ abstract class AbstractCsv
     /**
      * open a csv file to read or write
      *
-     * @param  string|resource|null                           $filename filename or stream resource, default = null
-     * @return \CSanquer\ColibriCsv\AbstractCsv
+     * @param  string|resource $file filename or stream resource, default = null
+     * @return AbstractCsv
      *
      * @throws \InvalidArgumentException
      */
@@ -260,7 +260,7 @@ abstract class AbstractCsv
     /**
      * close the current csv file
      *
-     * @return \CSanquer\ColibriCsv\AbstractCsv
+     * @return AbstractCsv
      */
     public function close()
     {
