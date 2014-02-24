@@ -345,7 +345,7 @@ class CsvWriterTest extends AbstractCsvTestCase
         $this->assertFalse($writer->isFileOpened());
         $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvWriter', $writer->open($stream));
         $this->assertTrue($writer->isFileOpened());
-        $this->assertInternalType('resource', $this->getFileHandlerValue($writer));
+        $this->assertInternalType('resource', $writer->getFileHandler());
         $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvWriter', $writer->writeRows($csvArray));
         $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvWriter', $writer->close());
 
@@ -354,5 +354,36 @@ class CsvWriterTest extends AbstractCsvTestCase
         if (file_exists($filename)) {
             unlink($filename);
         }
+    }
+    
+    public function testWritingTempStream()
+    {
+        $csvArray = array(
+            array('nom', 'prénom', 'age'),
+            array('Martin', 'Durand', '28'),
+            array('Alain', 'Richard', '36'),
+        );
+
+        $expected = 'nom,prénom,age'."\n".
+            'Martin,Durand,28'."\n".
+            'Alain,Richard,36'."\n";
+
+        $writer = new CsvWriter(array(
+            'delimiter' => ',',
+            'enclosure' => '"',
+            'encoding' => 'UTF-8',
+            'eol' => "\n",
+            'escape' => "\\",
+            'enclosing_mode' => Dialect::ENCLOSING_MINIMAL,
+            'escape_double' => true,
+        ));
+
+        $this->assertFalse($writer->isFileOpened());
+        $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvWriter', $writer->createTempStream());
+        $this->assertTrue($writer->isFileOpened());
+        $this->assertInternalType('resource', $writer->getFileHandler());
+        $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvWriter', $writer->writeRows($csvArray));
+        $this->assertEquals($expected, $writer->getFileContent());
+        $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvWriter', $writer->close());
     }
 }

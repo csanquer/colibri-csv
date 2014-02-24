@@ -85,7 +85,7 @@ class AbstractCsvTest extends AbstractCsvTestCase
         $this->assertFalse($this->structure->isFileOpened());
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open(__DIR__.'/../Fixtures/test1.csv'));
         $this->assertTrue($this->structure->isFileOpened());
-        $this->assertInternalType('resource', $this->getFileHandlerValue($this->structure));
+        $this->assertInternalType('resource', $this->structure->getFileHandler());
 
         return $this->structure;
     }
@@ -105,8 +105,8 @@ CSV;
         $this->assertFalse($this->structure->isFileOpened());
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open($stream));
         $this->assertTrue($this->structure->isFileOpened());
-        $this->assertInternalType('resource', $this->getFileHandlerValue($this->structure));
-        $this->assertEquals($csv, stream_get_contents($this->getFileHandlerValue($this->structure)));
+        $this->assertInternalType('resource', $this->structure->getFileHandler());
+        $this->assertEquals($csv, stream_get_contents($this->structure->getFileHandler()));
 
     }
 
@@ -119,14 +119,14 @@ CSV;
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open($file1));
         $this->assertEquals($file1, $this->structure->getFilename());
         $this->assertTrue($this->structure->isFileOpened());
-        $fileHandler1 = $this->getFileHandlerValue($this->structure);
+        $fileHandler1 = $this->structure->getFileHandler();
         $this->assertInternalType('resource', $fileHandler1);
 
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open($file2));
         $this->assertEquals($file2, $this->structure->getFilename());
         $this->assertTrue($this->structure->isFileOpened());
         $this->assertNotInternalType('resource', $fileHandler1);
-        $fileHandler2 = $this->getFileHandlerValue($this->structure);
+        $fileHandler2 = $this->structure->getFileHandler();
         $this->assertInternalType('resource', $fileHandler2);
 
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->close());
@@ -152,12 +152,13 @@ CSV;
 
     /**
      * @depends testOpen
+     * @param AbstractCsv $structure
      */
     public function testClose($structure)
     {
         $this->assertTrue($structure->isFileOpened());
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $structure->close());
         $this->assertFalse($structure->isFileOpened());
-        $this->assertNotInternalType('resource', $this->getFileHandlerValue($structure));
+        $this->assertNotInternalType('resource', $structure->getFileHandler());
     }
 }

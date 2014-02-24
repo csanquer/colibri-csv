@@ -689,7 +689,46 @@ class CsvReaderTest extends AbstractCsvTestCase
             ),
         );
     }
+    public function testReadingCSVString()
+    {
+        $csv = <<<CSV
+nom,prénom,age
+Martin,Durand,"28"
+Alain,Richard,"36"
+CSV;
 
+        $expected = array(
+            array('nom', 'prénom', 'age'),
+            array('Martin', 'Durand', '28'),
+            array('Alain', 'Richard', '36'),
+        );
+        
+        $reader = new CsvReader(array(
+            'delimiter' => ',',
+            'enclosure' => '"',
+            'encoding' => 'UTF-8',
+            'eol' => "\n",
+            'escape' => "\\",
+            'bom' => false,
+            'translit' => 'translit',
+            'force_encoding_detect' => false,
+            'skip_empty' => false,
+            'trim' => false,
+        ));
+
+        $this->assertFalse($reader->isFileOpened());
+        $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvReader', $reader->createTempStream($csv));
+        $this->assertTrue($reader->isFileOpened());
+        $this->assertInternalType('resource', $reader->getFileHandler());
+
+        $actual = array();
+        foreach ($reader as $row) {
+            $actual[] = $row;
+        }
+
+        $this->assertEquals($expected, $actual);
+    }
+    
     public function testReadingExistingFileHandler()
     {
         $csv = <<<CSV
@@ -724,7 +763,7 @@ CSV;
         $this->assertFalse($reader->isFileOpened());
         $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvReader', $reader->open($stream));
         $this->assertTrue($reader->isFileOpened());
-        $this->assertInternalType('resource', $this->getFileHandlerValue($reader));
+        $this->assertInternalType('resource', $reader->getFileHandler());
 
         $actual = array();
         foreach ($reader as $row) {

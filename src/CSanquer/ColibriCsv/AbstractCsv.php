@@ -262,6 +262,44 @@ abstract class AbstractCsv
     }
 
     /**
+     * Open a temp php stream for reading from a CSV string or Writing CSV to a PHP string
+     * 
+     * @param string $csvContent
+     * @return \CSanquer\ColibriCsv\AbstractCsv
+     */
+    public function createTempStream($csvContent = null)
+    {
+        $this->closeFile();
+        
+        $stream = fopen('php://temp', $this->mode == self::MODE_WRITING ? 'wb' : 'r+b');
+        if ($this->mode == self::MODE_READING && $csvContent !== null && $csvContent !== '') {
+            fwrite($stream, $csvContent);
+            rewind($stream);
+        }
+        
+        $this->open($stream);
+        
+        return $this;
+    }
+    
+    /**
+     * get the current stream resource (or file) content
+     * 
+     * @return string
+     */
+    public function getFileContent()
+    {
+        $this->openFile();
+        
+        $current = ftell($this->fileHandler);
+        rewind($this->fileHandler);
+        $content = stream_get_contents($this->fileHandler);
+        fseek($this->fileHandler, $current);
+        
+        return $content;
+    }
+    
+    /**
      * close the current csv file
      *
      * @return AbstractCsv
