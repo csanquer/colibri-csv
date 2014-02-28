@@ -82,7 +82,7 @@ $reader = new CsvReader(array(
 $reader->open('test.csv');
 
 // or open an existing stream resource
-$stream = fopen('test.csv', 'rb);
+$stream = fopen('test.csv', 'rb');
 $reader->open($stream);
 
 // or read an existing CSV string by creating a temporary in-memory file stream (not recommended for large CSV)
@@ -142,7 +142,7 @@ $writer = new CsvWriter(array(
 $writer->open('test.csv');
 
 // or open an existing stream resource
-$stream = fopen('test.csv', 'wb);
+$stream = fopen('test.csv', 'wb');
 $writer->open($stream);
 
 // or create an empty temporary in-memory file stream to write in and get CSV text later 
