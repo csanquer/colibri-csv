@@ -81,12 +81,25 @@ $reader = new CsvReader(array(
 //Open the csv file to read
 $reader->open('test.csv');
 
+// or open an existing stream resource
+$stream = fopen('test.csv', 'rb);
+$reader->open($stream);
+
+// or read an existing CSV string by creating a temporary in-memory file stream (not recommended for large CSV)
+$reader->createTempStream('lastname,firstname,age
+Martin,Durand,"28"
+Alain,Richard,"36"
+');
+
 //Read each row
 foreach ($reader as $row) {
     // do what you want with the current row array : $row
 }
 
-//close the csv file
+// or get all rows in one call (not recommended for large CSV)
+$csvRows = $reader->getRows();
+
+//close the csv file stream
 $reader->close();
 ```
 
@@ -128,6 +141,14 @@ $writer = new CsvWriter(array(
 //Open the csv file to write
 $writer->open('test.csv');
 
+// or open an existing stream resource
+$stream = fopen('test.csv', 'wb);
+$writer->open($stream);
+
+// or create an empty temporary in-memory file stream to write in and get CSV text later 
+// (not recommended for large CSV file)
+$writer->createTempStream();
+
 //Write a row
 $writer->writeRow(array('a', 'b', 'c'));
 
@@ -137,6 +158,9 @@ $writer->writeRows(array(
     array('g', 'h', 'i'),
     array('j', 'k', 'l'),
 ));
+
+// get the CSV Text as plain string
+$writer->getFileContent();
 
 //close the csv file
 $writer->close();
@@ -189,6 +213,21 @@ Requirements
 Suggested :
 
 * extension iconv
+
+Tests
+-----
+
+run unit tests with phpunit :
+
+```sh
+phpunit
+```
+
+run benchmark test :
+
+```sh
+php tests/benchmark_test.php
+```
 
 Licensing
 ---------
