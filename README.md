@@ -4,10 +4,10 @@ CSanquer ColibriCSV
 [![Latest Stable Version](https://poser.pugx.org/csanquer/colibri-csv/v/stable.png)](https://packagist.org/packages/csanquer/colibri-csv)
 [![Latest Unstable Version](https://poser.pugx.org/csanquer/colibri-csv/v/unstable.png)](https://packagist.org/packages/csanquer/colibri-csv)
 [![Build Status](https://travis-ci.org/csanquer/colibri-csv.png?branch=master)](https://travis-ci.org/csanquer/colibri-csv)
-<!--[![Coverage Status](https://coveralls.io/repos/csanquer/colibri-csv/badge.png)](https://coveralls.io/r/csanquer/colibri-csv)-->
 [![Code Coverage](https://scrutinizer-ci.com/g/csanquer/colibri-csv/badges/coverage.png?s=b11d084db20368214c00aad6d2a434e4530c5913)](https://scrutinizer-ci.com/g/csanquer/colibri-csv/)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/csanquer/colibri-csv/badges/quality-score.png?s=909ff1ccaafc6294e4a250c71d8e85b113b4638f)](https://scrutinizer-ci.com/g/csanquer/colibri-csv/)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d3aebf17-0abd-4b50-9439-a84c99b09773/mini.png)](https://insight.sensiolabs.com/projects/d3aebf17-0abd-4b50-9439-a84c99b09773)
+<!--[![Coverage Status](https://coveralls.io/repos/csanquer/colibri-csv/badge.png)](https://coveralls.io/r/csanquer/colibri-csv)-->
 
 [![Dependency Status](https://www.versioneye.com/user/projects/52f4e68dec1375dc7b00014d/badge.png)](https://www.versioneye.com/user/projects/52f4e68dec1375dc7b00014d)
 [![Project Status](http://stillmaintained.com/csanquer/colibri-csv.png)](http://stillmaintained.com/csanquer/colibri-csv)
