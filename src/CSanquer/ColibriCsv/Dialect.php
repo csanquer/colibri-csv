@@ -340,11 +340,29 @@ class Dialect
 
     /**
      *
+     * @param bool $asLabel get EOL as a label string like 'windows', 'unix', 'mac'
      * @return string
      */
-    public function getLineEndings()
+    public function getLineEndings($asLabel = false)
     {
-        return $this->eol;
+        $eol = $this->eol;
+        if ($asLabel) {
+            switch ($this->eol) {
+                case "\n";
+                    $eol = 'unix';
+                    break;
+
+                case "\r";
+                    $eol = 'mac';
+                    break;
+
+                case "\r\n";
+                default:
+                    $eol = 'windows';
+                    break;
+            }
+        }
+        return $eol;
     }
 
     /**

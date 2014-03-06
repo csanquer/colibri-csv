@@ -185,26 +185,27 @@ class DialectTest extends AbstractCsvTestCase
     /**
      * @dataProvider providerGetSetLineEndings
      */
-    public function testGetSetLineEndings($input, $expected)
+    public function testGetSetLineEndings($input, $expected, $expectedLabel)
     {
         $this->assertInstanceOf('CSanquer\ColibriCsv\Dialect', $this->dialect->setLineEndings($input));
         $this->assertEquals($expected, $this->dialect->getLineEndings());
+        $this->assertEquals($expectedLabel, $this->dialect->getLineEndings(true));
     }
 
     public function providerGetSetLineEndings()
     {
         return array(
-            array(null, "\r\n"),
-            array('', "\r\n"),
-            array("\r\n", "\r\n"),
-            array('windows', "\r\n"),
-            array('win', "\r\n"),
-            array('linux', "\n"),
-            array('unix', "\n"),
-            array("\n", "\n"),
-            array('mac', "\r"),
-            array('macos', "\r"),
-            array("\r", "\r"),
+            array(null, "\r\n", 'windows'),
+            array('', "\r\n", 'windows'),
+            array("\r\n", "\r\n", 'windows'),
+            array('windows', "\r\n", 'windows'),
+            array('win', "\r\n", 'windows'),
+            array('linux', "\n", 'unix'),
+            array('unix', "\n", 'unix'),
+            array("\n", "\n", 'unix'),
+            array('mac', "\r", 'mac'),
+            array('macos', "\r", 'mac'),
+            array("\r", "\r", 'mac'),
         );
     }
 
