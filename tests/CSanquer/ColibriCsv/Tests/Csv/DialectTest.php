@@ -190,6 +190,7 @@ class DialectTest extends AbstractCsvTestCase
         $this->assertInstanceOf('CSanquer\ColibriCsv\Dialect', $this->dialect->setLineEndings($input));
         $this->assertEquals($expected, $this->dialect->getLineEndings());
         $this->assertEquals($expectedLabel, $this->dialect->getLineEndings(true));
+        $this->assertEquals($expectedLabel, $this->dialect->getLineEndingsAsLabel(true));
     }
 
     public function providerGetSetLineEndings()

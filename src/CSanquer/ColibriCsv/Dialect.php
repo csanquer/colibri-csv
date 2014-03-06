@@ -364,6 +364,15 @@ class Dialect
         }
         return $eol;
     }
+    
+    /**
+     * 
+     * @return string
+     */
+    public function getLineEndingsAsLabel()
+    {
+        return $this->getLineEndings(true);
+    }
 
     /**
      *
