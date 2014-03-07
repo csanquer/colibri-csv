@@ -82,7 +82,7 @@ class CsvWriter extends AbstractCsv
 
     /**
      *
-     * @param resource $fileHandler
+     * @param resource|null $fileHandler
      * @param array    $values
      *
      * @return CsvWriter
@@ -91,45 +91,50 @@ class CsvWriter extends AbstractCsv
      */
     protected function write($fileHandler, $values)
     {
-        $delimiter = $this->dialect->getDelimiter();
-        $enclosure = $this->dialect->getEnclosure();
-        $eol = $this->dialect->getLineEndings();
-        $escape = $this->dialect->getEscape();
-        $trim = $this->dialect->getTrim();
-        $enclosingMode = $this->dialect->getEnclosingMode();
-        $escapeDouble = $this->dialect->getEscapeDouble();
-        $line = implode($this->dialect->getDelimiter(), array_map(function($var) use ($delimiter, $enclosure, $eol, $escape, $trim, $enclosingMode, $escapeDouble) {
-            // Escape enclosures and enclosed string
-            if ($escapeDouble) {
-                // double enclosure
-                $searches = array($enclosure);
-                $replacements = array($enclosure.$enclosure);
-            } else {
-                // use escape character
-                $searches = array($enclosure);
-                $replacements = array($escape.$enclosure);
-            }
-            $clean = str_replace($searches, $replacements, $trim ? trim($var) : $var);
+        if ($this->isFileOpened()) {
+            $delimiter = $this->dialect->getDelimiter();
+            $enclosure = $this->dialect->getEnclosure();
+            $eol = $this->dialect->getLineEndings();
+            $escape = $this->dialect->getEscape();
+            $trim = $this->dialect->getTrim();
+            $enclosingMode = $this->dialect->getEnclosingMode();
+            $escapeDouble = $this->dialect->getEscapeDouble();
+            $line = implode($this->dialect->getDelimiter(), array_map(
+                function($var) use ($delimiter, $enclosure, $eol, $escape, $trim, $enclosingMode, $escapeDouble) {
+                    // Escape enclosures and enclosed string
+                    if ($escapeDouble) {
+                        // double enclosure
+                        $searches = array($enclosure);
+                        $replacements = array($enclosure.$enclosure);
+                    } else {
+                        // use escape character
+                        $searches = array($enclosure);
+                        $replacements = array($escape.$enclosure);
+                    }
+                    $clean = str_replace($searches, $replacements, $trim ? trim($var) : $var);
 
-            if (
-                $enclosingMode === Dialect::ENCLOSING_ALL ||
-                ($enclosingMode === Dialect::ENCLOSING_MINIMAL && preg_match('/['.preg_quote($enclosure.$delimiter.$eol, '/').']+/', $clean)) ||
-                ($enclosingMode === Dialect::ENCLOSING_NONNUMERIC && preg_match('/[^\d\.]+/', $clean))
-            )
-            {
-                $var = $enclosure.$clean.$enclosure;
-            } else {
-                $var = $clean;
-            }
+                if ($enclosingMode === Dialect::ENCLOSING_ALL
+                    || ($enclosingMode === Dialect::ENCLOSING_MINIMAL
+                        && preg_match('/['.preg_quote($enclosure.$delimiter.$eol, '/').']+/', $clean))
+                    || ($enclosingMode === Dialect::ENCLOSING_NONNUMERIC && preg_match('/[^\d\.]+/', $clean))
+                    )
+                    {
+                        $var = $enclosure.$clean.$enclosure;
+                    } else {
+                        $var = $clean;
+                    }
 
-            return $var;
-        }, $values))
-            // Add line ending
-            .$this->dialect->getLineEndings();
+                    return $var;
+                }, 
+                $values
+            ))
+                // Add line ending
+                .$this->dialect->getLineEndings();
 
-        // Write to file
-        fwrite($fileHandler, $this->convertEncoding($line, 'UTF-8', $this->dialect->getEncoding()));
-
+            // Write to file
+            fwrite($fileHandler, $this->convertEncoding($line, 'UTF-8', $this->dialect->getEncoding()));
+        }
+        
         return $this;
     }
 

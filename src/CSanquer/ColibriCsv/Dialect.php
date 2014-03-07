@@ -129,7 +129,8 @@ class Dialect
      * - skip_empty : (default = false)  remove lines with empty values
      * - trim : (default = false) trim each values on each line
      *
-     * N.B. : Be careful, the options 'force_encoding_detect', 'skip_empty' and 'trim' decrease significantly the performances
+     * N.B. : Be careful, the options 'force_encoding_detect', 'skip_empty' and 'trim' 
+     * decrease significantly the performances
      *
      * @param array $options Dialect Options to describe CSV file parameters
      */
@@ -200,20 +201,20 @@ class Dialect
     {
         switch ($eol) {
             case 'unix':
-            case 'linux';
-            case "\n";
+            case 'linux':
+            case "\n":
                 $this->eol = "\n";
                 break;
 
             case 'mac':
-            case 'macos';
-            case "\r";
+            case 'macos':
+            case "\r":
                 $this->eol = "\r";
                 break;
 
             case 'windows':
-            case 'win';
-            case "\r\n";
+            case 'win':
+            case "\r\n":
             default:
                 $this->eol = "\r\n";
                 break;
@@ -348,15 +349,15 @@ class Dialect
         $eol = $this->eol;
         if ($asLabel) {
             switch ($this->eol) {
-                case "\n";
+                case "\n":
                     $eol = 'unix';
                     break;
 
-                case "\r";
+                case "\r":
                     $eol = 'mac';
                     break;
 
-                case "\r\n";
+                case "\r\n":
                 default:
                     $eol = 'windows';
                     break;

@@ -90,6 +90,15 @@ class AbstractCsvTest extends AbstractCsvTestCase
         return $this->structure;
     }
 
+    public function testOpenFilePreviouslySet()
+    {
+        $this->assertFalse($this->structure->isFileOpened());
+        $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->setFile(__DIR__.'/../Fixtures/test1.csv'));
+        $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open());
+        $this->assertTrue($this->structure->isFileOpened());
+        $this->assertInternalType('resource', $this->structure->getFileHandler());
+    }
+    
     public function testOpenFileHandler()
     {
         $csv = <<<CSV

@@ -45,7 +45,8 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
      * - skip_empty : (default = false)  remove lines with empty values
      * - trim : (default = false) trim each values on each line
      *
-     * N.B. : Be careful, the options 'force_encoding_detect', 'skip_empty' and 'trim' decrease significantly the performances
+     * N.B. : Be careful, the options 'force_encoding_detect', 'skip_empty' and 'trim' 
+     * decrease significantly the performances
      *
      * @param array $options Dialect Options to describe CSV file parameters
      */
@@ -81,7 +82,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
     protected function detectEncoding()
     {
         $this->detectedEncoding = $this->dialect->getEncoding();
-        if ($this->dialect->getForceEncodingDetection() || empty($this->detectedEncoding)) {
+        if ($this->isFileOpened() && ($this->dialect->getForceEncodingDetection() || empty($this->detectedEncoding))) {
             //only read the 100 first lines to detect encoding to improve performance
             $text = '';
             $line = 0;
@@ -98,7 +99,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
 
     /**
      *
-     * @param  resource $fileHandler
+     * @param  resource|null $fileHandler
      * @return array
      *
      * @throws \InvalidArgumentException
@@ -124,7 +125,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
                     $line[0] = $this->removeBom($line[0]);
                 }
 
-                $row = array_map(function($var) use ($enclosure, $escape, $trim, $translit, $detectedEncoding) {
+                $row = array_map(function ($var) use ($enclosure, $escape, $trim, $translit, $detectedEncoding) {
                     // workaround when escape char is not equals to double quote
                     if ($enclosure === '"' && $escape !== $enclosure) {
                         $var = str_replace($escape.$enclosure, $enclosure, $var);
@@ -135,9 +136,9 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
                     return $trim ? trim($var) : $var;
                 }, $line);
 
-                if ($this->dialect->getSkipEmptyLines() && count(array_filter($row, function($var) {
+                if ($this->dialect->getSkipEmptyLines() && 0 === count(array_filter($row, function($var) {
                     return $var !== false && $var !== null && $var !== '';
-                })) === 0) {
+                }))) {
                     $row = false;
                 }
             }
@@ -194,10 +195,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
     {
         $this->rewind();
     }
-
-    /******************************************************************************/
-    /*                   iterator interface methods                               */
-    /******************************************************************************/
+    
     /**
      *
      * @return array
@@ -231,12 +229,14 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
     public function rewind()
     {
         $this->openFile($this->fileHandlerMode);
-        rewind($this->getFileHandler());
+        if ($this->isFileOpened()) {
+            rewind($this->getFileHandler());
 
-        $this->position = 0;
-        $this->currentValues = $this->readLine($this->getFileHandler());
-        if ($this->dialect->getSkipEmptyLines() && $this->currentValues === false) {
-            $this->next();
+            $this->position = 0;
+            $this->currentValues = $this->readLine($this->getFileHandler());
+            if ($this->dialect->getSkipEmptyLines() && $this->currentValues === false) {
+                $this->next();
+            }
         }
     }
 
@@ -249,34 +249,33 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
         return $this->currentValues !== null;
     }
 
-    /******************************************************************************/
-    /*                   countable interface methods                              */
-    /******************************************************************************/
     public function count()
     {
-        $this->openFile($this->fileHandlerMode);
-        rewind($this->getFileHandler());
-
         $count = 0;
-        $enclosure = $this->dialect->getEnclosure();
-        $escape = $this->dialect->getEscape();
-        $delimiter = $this->dialect->getDelimiter();
+        $this->openFile($this->fileHandlerMode);
+        if ($this->isFileOpened()) {
+            rewind($this->getFileHandler());
 
-        if ($this->dialect->getSkipEmptyLines()) {
-            while (!feof($this->getFileHandler())) {
-                $line = fgetcsv($this->getFileHandler(), null, $delimiter, $enclosure, $escape);
-                if (!empty($line) && count(array_filter($line, function($var) {
-                    // empty row pattern without alphanumeric
-                    return $var !== false && $var !== null && $var !== '' && preg_match('([[:alnum:]]+)', $var);
-                })) !== 0) {
-                    $count++;
+            $enclosure = $this->dialect->getEnclosure();
+            $escape = $this->dialect->getEscape();
+            $delimiter = $this->dialect->getDelimiter();
+
+            if ($this->dialect->getSkipEmptyLines()) {
+                while (!feof($this->getFileHandler())) {
+                    $line = fgetcsv($this->getFileHandler(), null, $delimiter, $enclosure, $escape);
+                    if (!empty($line) && 0 !== count(array_filter($line, function($var) {
+                        // empty row pattern without alphanumeric
+                        return $var !== false && $var !== null && $var !== '' && preg_match('([[:alnum:]]+)', $var);
+                    }))) {
+                        $count++;
+                    }
                 }
-            }
-        } else {
-            while (!feof($this->getFileHandler())) {
-                $line = fgetcsv($this->getFileHandler(), null, $delimiter, $enclosure, $escape);
-                if (!empty($line)) {
-                    $count++;
+            } else {
+                while (!feof($this->getFileHandler())) {
+                    $line = fgetcsv($this->getFileHandler(), null, $delimiter, $enclosure, $escape);
+                    if (!empty($line)) {
+                        $count++;
+                    }
                 }
             }
         }

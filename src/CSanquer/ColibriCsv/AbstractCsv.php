@@ -11,9 +11,8 @@ use CSanquer\ColibriCsv\Utility\Converter;
  */
 abstract class AbstractCsv
 {
-    CONST MODE_READING = 'reading';
-    CONST MODE_WRITING = 'writing';
-
+    const MODE_READING = 'reading';
+    const MODE_WRITING = 'writing';
     /**
      *
      * @var Dialect
@@ -76,7 +75,10 @@ abstract class AbstractCsv
     protected function checkFileHandleMode($mode)
     {
         if (!in_array($mode, $this->getCompatibleFileHanderModes())) {
-            throw new \InvalidArgumentException('The file handler mode "'.$mode.'" is not valid. Allowed modes : "'.implode('", "', $this->getCompatibleFileHanderModes()).'".');
+            throw new \InvalidArgumentException(
+            'The file handler mode "'.$mode.'" is not valid. Allowed modes : "'.
+            implode('", "', $this->getCompatibleFileHanderModes()).'".'
+            );
         }
     }
 
@@ -119,7 +121,7 @@ abstract class AbstractCsv
             if (get_resource_type($file) !== 'stream') {
                 throw new \InvalidArgumentException('The file resource must be valid stream resource.');
             }
-            
+
             $streamMeta = stream_get_meta_data($file);
             $mode = $streamMeta['mode'];
             $this->checkFileHandleMode($mode);
@@ -168,7 +170,9 @@ abstract class AbstractCsv
     {
         if ($this->dialect->getUseBom() && $this->dialect->getEncoding() == 'UTF-8') {
             // Write the UTF-8 BOM code
-            fwrite($this->fileHandler, "\xEF\xBB\xBF");
+            if ($this->isFileOpened()) {
+                fwrite($this->fileHandler, "\xEF\xBB\xBF");
+            }
         }
 
         return $this;
@@ -182,7 +186,7 @@ abstract class AbstractCsv
      */
     protected function removeBom($str)
     {
-        return $str !== false && $this->dialect->getUseBom() ? str_replace("\xEF\xBB\xBF",'',$str) : $str;
+        return $str !== false && $this->dialect->getUseBom() ? str_replace("\xEF\xBB\xBF", '', $str) : $str;
     }
 
     /**
@@ -214,7 +218,7 @@ abstract class AbstractCsv
                 throw new \InvalidArgumentException('Could not open file "'.$this->filename.'" for '.$modeLabel.'.');
             }
         }
-        
+
         return $this->fileHandler;
     }
 
@@ -255,7 +259,9 @@ abstract class AbstractCsv
      */
     public function open($file = null)
     {
-        $this->setFile($file);
+        if (!is_null($file)) {
+            $this->setFile($file);
+        }
         $this->openFile($this->fileHandlerMode);
 
         return $this;
@@ -270,18 +276,18 @@ abstract class AbstractCsv
     public function createTempStream($csvContent = null)
     {
         $this->closeFile();
-        
+
         $stream = fopen('php://temp', $this->mode == self::MODE_WRITING ? 'wb' : 'r+b');
         if ($this->mode == self::MODE_READING && $csvContent !== null && $csvContent !== '') {
             fwrite($stream, $csvContent);
             rewind($stream);
         }
-        
+
         $this->open($stream);
-        
+
         return $this;
     }
-    
+
     /**
      * get the current stream resource (or file) content
      * 
@@ -290,15 +296,17 @@ abstract class AbstractCsv
     public function getFileContent()
     {
         $this->openFile();
-        
-        $current = ftell($this->fileHandler);
-        rewind($this->fileHandler);
-        $content = stream_get_contents($this->fileHandler);
-        fseek($this->fileHandler, $current);
-        
+
+        if ($this->isFileOpened()) {
+            $current = ftell($this->fileHandler);
+            rewind($this->fileHandler);
+            $content = stream_get_contents($this->fileHandler);
+            fseek($this->fileHandler, $current);
+        }
+
         return $content;
     }
-    
+
     /**
      * close the current csv file
      *
