@@ -296,7 +296,8 @@ abstract class AbstractCsv
     public function getFileContent()
     {
         $this->openFile();
-
+        $content = '';
+        
         if ($this->isFileOpened()) {
             $current = ftell($this->fileHandler);
             rewind($this->fileHandler);
