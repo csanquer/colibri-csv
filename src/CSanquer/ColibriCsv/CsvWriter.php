@@ -71,7 +71,7 @@ class CsvWriter extends AbstractCsv
      * echo HTTP headers for streaming CSV file
      *
      * @param string $filename
-     * 
+     *
      * @codeCoverageIgnore this cannot be tested correctly by PHPUnit because it send HTTP headers
      */
     public function createHttpHeaders($filename)
@@ -85,7 +85,7 @@ class CsvWriter extends AbstractCsv
     /**
      *
      * @param resource|null $fileHandler
-     * @param array    $values
+     * @param array         $values
      *
      * @return CsvWriter
      *
@@ -102,7 +102,7 @@ class CsvWriter extends AbstractCsv
             $enclosingMode = $this->dialect->getEnclosingMode();
             $escapeDouble = $this->dialect->getEscapeDouble();
             $line = implode($this->dialect->getDelimiter(), array_map(
-                function($var) use ($delimiter, $enclosure, $eol, $escape, $trim, $enclosingMode, $escapeDouble) {
+                function ($var) use ($delimiter, $enclosure, $eol, $escape, $trim, $enclosingMode, $escapeDouble) {
                     // Escape enclosures and enclosed string
                     if ($escapeDouble) {
                         // double enclosure
@@ -115,10 +115,10 @@ class CsvWriter extends AbstractCsv
                     }
                     $clean = str_replace($searches, $replacements, $trim ? trim($var) : $var);
 
-                if ($enclosingMode === Dialect::ENCLOSING_ALL
-                    || ($enclosingMode === Dialect::ENCLOSING_MINIMAL
-                        && preg_match('/['.preg_quote($enclosure.$delimiter.$eol, '/').']+/', $clean))
-                    || ($enclosingMode === Dialect::ENCLOSING_NONNUMERIC && preg_match('/[^\d\.]+/', $clean))
+                    if ($enclosingMode === Dialect::ENCLOSING_ALL
+                        || ($enclosingMode === Dialect::ENCLOSING_MINIMAL
+                            && preg_match('/['.preg_quote($enclosure.$delimiter.$eol, '/').']+/', $clean))
+                        || ($enclosingMode === Dialect::ENCLOSING_NONNUMERIC && preg_match('/[^\d\.]+/', $clean))
                     )
                     {
                         $var = $enclosure.$clean.$enclosure;
@@ -127,16 +127,16 @@ class CsvWriter extends AbstractCsv
                     }
 
                     return $var;
-                }, 
+                },
                 $values
             ))
-                // Add line ending
-                .$this->dialect->getLineEndings();
+            // Add line ending
+            .$this->dialect->getLineEndings();
 
             // Write to file
             fwrite($fileHandler, $this->convertEncoding($line, 'UTF-8', $this->dialect->getEncoding()));
         }
-        
+
         return $this;
     }
 

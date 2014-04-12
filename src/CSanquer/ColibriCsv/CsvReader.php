@@ -45,7 +45,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
      * - skip_empty : (default = false)  remove lines with empty values
      * - trim : (default = false) trim each values on each line
      *
-     * N.B. : Be careful, the options 'force_encoding_detect', 'skip_empty' and 'trim' 
+     * N.B. : Be careful, the options 'force_encoding_detect', 'skip_empty' and 'trim'
      * decrease significantly the performances
      *
      * @param array $options Dialect Options to describe CSV file parameters
@@ -136,9 +136,11 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
                     return $trim ? trim($var) : $var;
                 }, $line);
 
-                if ($this->dialect->getSkipEmptyLines() && 0 === count(array_filter($row, function($var) {
+                $notEmptyCount = count(array_filter($row, function($var) {
                     return $var !== false && $var !== null && $var !== '';
-                }))) {
+                }));
+
+                if ($this->dialect->getSkipEmptyLines() && 0 === $notEmptyCount) {
                     $row = false;
                 }
             }
@@ -195,7 +197,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
     {
         $this->rewind();
     }
-    
+
     /**
      *
      * @return array
@@ -263,11 +265,14 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
             if ($this->dialect->getSkipEmptyLines()) {
                 while (!feof($this->getFileHandler())) {
                     $line = fgetcsv($this->getFileHandler(), null, $delimiter, $enclosure, $escape);
-                    if (!empty($line) && 0 !== count(array_filter($line, function($var) {
-                        // empty row pattern without alphanumeric
-                        return $var !== false && $var !== null && $var !== '' && preg_match('([[:alnum:]]+)', $var);
-                    }))) {
-                        $count++;
+                    if (!empty($line)) {
+                        $notEmptyCount = count(array_filter($line, function($var) {
+                            // empty row pattern without alphanumeric
+                            return $var !== false && $var !== null && $var !== '' && preg_match('([[:alnum:]]+)', $var);
+                        }));
+                        if (0 !== $notEmptyCount) {
+                            $count++;
+                        }
                     }
                 }
             } else {

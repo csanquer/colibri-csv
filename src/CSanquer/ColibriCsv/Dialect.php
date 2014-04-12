@@ -129,7 +129,7 @@ class Dialect
      * - skip_empty : (default = false)  remove lines with empty values
      * - trim : (default = false) trim each values on each line
      *
-     * N.B. : Be careful, the options 'force_encoding_detect', 'skip_empty' and 'trim' 
+     * N.B. : Be careful, the options 'force_encoding_detect', 'skip_empty' and 'trim'
      * decrease significantly the performances
      *
      * @param array $options Dialect Options to describe CSV file parameters
@@ -194,8 +194,8 @@ class Dialect
 
     /**
      *
-     * @param  string                       $eol
-     * @return \CSanquer\ColibriCsv\Dialect
+     * @param  string  $eol
+     * @return Dialect
      */
     public function setLineEndings($eol)
     {
@@ -234,8 +234,8 @@ class Dialect
 
     /**
      *
-     * @param  string                       $translit default = "translit" (iconv translit option possible values : 'translit', 'ignore', null)
-     * @return \CSanquer\ColibriCsv\Dialect
+     * @param  string  $translit default = "translit" (iconv option : 'translit', 'ignore', null)
+     * @return Dialect
      */
     public function setTranslit($translit)
     {
@@ -247,8 +247,8 @@ class Dialect
 
     /**
      *
-     * @param  string                       $encoding
-     * @return \CSanquer\ColibriCsv\Dialect
+     * @param  string  $encoding
+     * @return Dialect
      */
     public function setEncoding($encoding)
     {
@@ -259,8 +259,8 @@ class Dialect
 
     /**
      *
-     * @param  string                       $enclosure
-     * @return \CSanquer\ColibriCsv\Dialect
+     * @param  string  $enclosure
+     * @return Dialect
      */
     public function setEnclosure($enclosure)
     {
@@ -280,8 +280,8 @@ class Dialect
 
     /**
      *
-     * @param  string                       $enclosingMode
-     * @return \CSanquer\ColibriCsv\Dialect
+     * @param  string  $enclosingMode
+     * @return Dialect
      */
     public function setEnclosingMode($enclosingMode)
     {
@@ -305,8 +305,8 @@ class Dialect
 
     /**
      *
-     * @param  bool                         $escapeDouble
-     * @return \CSanquer\ColibriCsv\Dialect
+     * @param  bool    $escapeDouble
+     * @return Dialect
      */
     public function setEscapeDouble($escapeDouble)
     {
@@ -317,8 +317,8 @@ class Dialect
 
     /**
      *
-     * @param  string                       $escape
-     * @return \CSanquer\ColibriCsv\Dialect
+     * @param  string  $escape
+     * @return Dialect
      */
     public function setEscape($escape)
     {
@@ -329,8 +329,8 @@ class Dialect
 
     /**
      *
-     * @param  string                       $delimiter
-     * @return \CSanquer\ColibriCsv\Dialect
+     * @param  string  $delimiter
+     * @return Dialect
      */
     public function setDelimiter($delimiter)
     {
@@ -341,7 +341,7 @@ class Dialect
 
     /**
      *
-     * @param bool $asLabel get EOL as a label string like 'windows', 'unix', 'mac'
+     * @param  bool   $asLabel get EOL as a label string like 'windows', 'unix', 'mac'
      * @return string
      */
     public function getLineEndings($asLabel = false)
@@ -363,11 +363,12 @@ class Dialect
                     break;
             }
         }
+
         return $eol;
     }
-    
+
     /**
-     * 
+     *
      * @return string
      */
     public function getLineEndingsAsLabel()
@@ -424,7 +425,7 @@ class Dialect
      *
      * @param bool $useBom (BOM will be writed when opening the file)
      *
-     * @return \CSanquer\ColibriCsv\Dialect
+     * @return Dialect
      */
     public function setUseBom($useBom)
     {
@@ -446,7 +447,7 @@ class Dialect
      *
      * @param bool $trim (trim all values)
      *
-     * @return \CSanquer\ColibriCsv\Dialect
+     * @return Dialect
      */
     public function setTrim($trim)
     {
@@ -466,8 +467,8 @@ class Dialect
 
     /**
      *
-     * @param  bool                         $forceEncodingDetection
-     * @return \CSanquer\ColibriCsv\Dialect
+     * @param  bool    $forceEncodingDetection
+     * @return Dialect
      */
     public function setForceEncodingDetection($forceEncodingDetection)
     {
@@ -487,8 +488,8 @@ class Dialect
 
     /**
      *
-     * @param  bool                         $skipEmptyLines
-     * @return \CSanquer\ColibriCsv\Dialect
+     * @param  bool    $skipEmptyLines
+     * @return Dialect
      */
     public function setSkipEmptyLines($skipEmptyLines)
     {

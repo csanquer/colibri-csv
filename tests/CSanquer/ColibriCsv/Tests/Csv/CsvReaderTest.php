@@ -702,7 +702,7 @@ CSV;
             array('Martin', 'Durand', '28'),
             array('Alain', 'Richard', '36'),
         );
-        
+
         $reader = new CsvReader(array(
             'delimiter' => ',',
             'enclosure' => '"',
@@ -728,7 +728,7 @@ CSV;
 
         $this->assertEquals($expected, $actual);
     }
-    
+
     public function testReadingExistingFileHandler()
     {
         $csv = <<<CSV

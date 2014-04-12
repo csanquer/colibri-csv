@@ -343,7 +343,7 @@ class CsvWriterTest extends AbstractCsvTestCase
             unlink($filename);
         }
     }
-    
+
     public function testWritingTempStream()
     {
         $csvArray = array(

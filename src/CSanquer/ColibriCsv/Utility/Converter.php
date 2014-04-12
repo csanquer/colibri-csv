@@ -72,7 +72,12 @@ class Converter
         }
 
         // CUSTOM: IBM AIX iconv() does not work
-        if (defined('PHP_OS') && @stristr(PHP_OS, 'AIX') && defined('ICONV_IMPL') && (@strcasecmp(ICONV_IMPL, 'unknown') == 0) && defined('ICONV_VERSION') && (@strcasecmp(ICONV_VERSION, 'unknown') == 0)
+        if (defined('PHP_OS') &&
+            @stristr(PHP_OS, 'AIX') &&
+            defined('ICONV_IMPL') &&
+            @strcasecmp(ICONV_IMPL, 'unknown') == 0 &&
+            defined('ICONV_VERSION') &&
+            @strcasecmp(ICONV_VERSION, 'unknown') == 0
         ) {
             self::$iconvEnabled = false;
 
@@ -182,8 +187,9 @@ class Converter
      */
     public static function utf16Decode($str, $bom_be = true)
     {
-        if (strlen($str) < 2)
+        if (strlen($str) < 2) {
             return $str;
+        }
         $c0 = ord($str{0});
         $c1 = ord($str{1});
         if ($c0 == 0xfe && $c1 == 0xff) {

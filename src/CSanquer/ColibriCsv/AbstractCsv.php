@@ -76,8 +76,8 @@ abstract class AbstractCsv
     {
         if (!in_array($mode, $this->getCompatibleFileHanderModes())) {
             throw new \InvalidArgumentException(
-            'The file handler mode "'.$mode.'" is not valid. Allowed modes : "'.
-            implode('", "', $this->getCompatibleFileHanderModes()).'".'
+                'The file handler mode "'.$mode.'" is not valid. Allowed modes : "'.
+                implode('", "', $this->getCompatibleFileHanderModes()).'".'
             );
         }
     }
@@ -269,8 +269,8 @@ abstract class AbstractCsv
 
     /**
      * Open a temp php stream for reading from a CSV string or Writing CSV to a PHP string
-     * 
-     * @param string $csvContent
+     *
+     * @param  string                           $csvContent
      * @return \CSanquer\ColibriCsv\AbstractCsv
      */
     public function createTempStream($csvContent = null)
@@ -290,14 +290,14 @@ abstract class AbstractCsv
 
     /**
      * get the current stream resource (or file) content
-     * 
+     *
      * @return string
      */
     public function getFileContent()
     {
         $this->openFile();
         $content = '';
-        
+
         if ($this->isFileOpened()) {
             $current = ftell($this->fileHandler);
             rewind($this->fileHandler);
