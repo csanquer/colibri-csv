@@ -136,7 +136,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
                     return $trim ? trim($var) : $var;
                 }, $line);
 
-                $notEmptyCount = count(array_filter($row, function($var) {
+                $notEmptyCount = count(array_filter($row, function ($var) {
                     return $var !== false && $var !== null && $var !== '';
                 }));
 
@@ -266,7 +266,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
                 while (!feof($this->getFileHandler())) {
                     $line = fgetcsv($this->getFileHandler(), null, $delimiter, $enclosure, $escape);
                     if (!empty($line)) {
-                        $notEmptyCount = count(array_filter($line, function($var) {
+                        $notEmptyCount = count(array_filter($line, function ($var) {
                             // empty row pattern without alphanumeric
                             return $var !== false && $var !== null && $var !== '' && preg_match('([[:alnum:]]+)', $var);
                         }));
