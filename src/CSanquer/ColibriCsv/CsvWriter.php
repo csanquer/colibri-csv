@@ -71,6 +71,8 @@ class CsvWriter extends AbstractCsv
      * echo HTTP headers for streaming CSV file
      *
      * @param string $filename
+     * 
+     * @codeCoverageIgnore this cannot be tested correctly by PHPUnit because it send HTTP headers
      */
     public function createHttpHeaders($filename)
     {

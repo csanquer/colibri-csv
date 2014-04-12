@@ -242,18 +242,6 @@ class CsvWriterTest extends AbstractCsvTestCase
     }
 
     /**
-     * @runInSeparateProcess
-     */
-    public function testGoToReferer()
-    {
-        $this->writer->createHttpHeaders('test.csv');
-        $this->assertEquals(array(
-            'Content-Type: application/csv',
-            'Content-Disposition: attachment;filename="test.csv"',
-        ), xdebug_get_headers());
-    }
-
-    /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Could not open file "" for writing.
      */

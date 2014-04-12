@@ -55,7 +55,7 @@ class CsvReaderTest extends AbstractCsvTestCase
             'eol' => "\n",
             'escape' => "\\",
             'bom' => false,
-            'translit' => 'translit',
+            'translit' => 'ignore',
             'force_encoding_detect' => false,
             'skip_empty' => false,
             'trim' => false,

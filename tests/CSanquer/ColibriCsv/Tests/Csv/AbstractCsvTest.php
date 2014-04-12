@@ -107,7 +107,7 @@ Martin,Durand,"28"
 Alain,Richard,"36"
 CSV;
 
-        $stream = fopen('php://memory','r+');
+        $stream = fopen('php://memory','r+b');
         fwrite($stream, $csv);
         rewind($stream);
 

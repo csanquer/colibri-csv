@@ -138,7 +138,7 @@ class Converter
     public static function convertEncoding($value, $from = 'auto', $to = 'UTF-8', $iconvTranslit = null)
     {
         if ($from != $to) {
-            if ($from == 'auto') {
+            if ($from == 'auto' || empty($from)) {
                 $from = self::detectEncoding($value);
             }
 
