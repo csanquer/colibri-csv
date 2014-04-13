@@ -115,12 +115,13 @@ class CsvWriter extends AbstractCsv
                     }
                     $clean = str_replace($searches, $replacements, $trim ? trim($var) : $var);
 
-                    if ($enclosingMode === Dialect::ENCLOSING_ALL
-                        || ($enclosingMode === Dialect::ENCLOSING_MINIMAL
-                            && preg_match('/['.preg_quote($enclosure.$delimiter.$eol, '/').']+/', $clean))
-                        || ($enclosingMode === Dialect::ENCLOSING_NONNUMERIC && preg_match('/[^\d\.]+/', $clean))
-                    )
-                    {
+                    if ($enclosingMode === Dialect::ENCLOSING_ALL ||
+                        (
+                            $enclosingMode === Dialect::ENCLOSING_MINIMAL &&
+                            preg_match('/['.preg_quote($enclosure.$delimiter.$eol, '/').']+/', $clean)
+                        ) ||
+                        ($enclosingMode === Dialect::ENCLOSING_NONNUMERIC && preg_match('/[^\d\.]+/', $clean))
+                    ) {
                         $var = $enclosure.$clean.$enclosure;
                     } else {
                         $var = $clean;
