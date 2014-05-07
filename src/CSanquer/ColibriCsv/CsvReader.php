@@ -121,7 +121,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
                 $translit = $this->dialect->getTranslit();
                 $detectedEncoding = $this->detectedEncoding;
 
-                if ($this->position == 0) {
+                if ($this->position <= 0) {
                     $line[0] = $this->removeBom($line[0]);
                 }
 
@@ -234,11 +234,8 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
         if ($this->isFileOpened()) {
             rewind($this->getFileHandler());
 
-            $this->position = 0;
-            $this->currentValues = $this->readLine($this->getFileHandler());
-            if ($this->dialect->getSkipEmptyLines() && $this->currentValues === false) {
-                $this->next();
-            }
+            $this->position = -1;
+            $this->next();
         }
     }
 
