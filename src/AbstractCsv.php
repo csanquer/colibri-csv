@@ -44,6 +44,13 @@ abstract class AbstractCsv
     protected $fileHandler;
 
     /**
+     * CSV Header row
+     * 
+     * @var array
+     */
+    protected $headers = [];
+    
+    /**
      *
      * Default Excel configuration
      *
@@ -63,6 +70,16 @@ abstract class AbstractCsv
      * @return array compatible file handler modes
      */
     abstract protected function getCompatibleFileHanderModes();
+
+    /**
+     * get CSV first row header if enabled
+     * 
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
 
     /**
      *

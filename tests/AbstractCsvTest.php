@@ -64,6 +64,11 @@ class AbstractCsvTest extends AbstractCsvTestCase
         );
     }
 
+    public function testGetHeaders()
+    {
+        $this->assertEquals(array(), $this->structure->getHeaders());
+    }
+    
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage

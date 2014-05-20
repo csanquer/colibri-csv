@@ -217,13 +217,47 @@ class CsvReaderTest extends AbstractCsvTestCase
                 __DIR__.'/Fixtures/test7.csv',
                 4
             ),
+            array(
+                array(
+                    'delimiter' => ',',
+                    'enclosure' => '"',
+                    'encoding' => 'UTF-8',
+                    'eol' => "\n",
+                    'escape' => "\\",
+                    'bom' => false,
+                    'translit' => 'translit',
+                    'force_encoding_detect' => false,
+                    'skip_empty' => false,
+                    'trim' => false,
+                    'first_row_header' => false,
+                ),
+                __DIR__.'/Fixtures/test8.csv',
+                3,
+            ),
+            array(
+                array(
+                    'delimiter' => ',',
+                    'enclosure' => '"',
+                    'encoding' => 'UTF-8',
+                    'eol' => "\n",
+                    'escape' => "\\",
+                    'bom' => false,
+                    'translit' => 'translit',
+                    'force_encoding_detect' => false,
+                    'skip_empty' => false,
+                    'trim' => false,
+                    'first_row_header' => true,
+                ),
+                __DIR__.'/Fixtures/test8.csv',
+                2,
+            ),
         );
     }
 
     /**
      * @dataProvider providerReading
      */
-    public function testReading($options, $filename, $expected)
+    public function testReading($options, $filename, $expected, $expectedHeader = [])
     {
         $this->reader = new CsvReader($options);
         $this->assertInstanceOf('CSanquer\ColibriCsv\CsvReader', $this->reader->open($filename));
@@ -246,6 +280,7 @@ class CsvReaderTest extends AbstractCsvTestCase
         $this->assertEquals($expected, $actual1);
         $this->assertEquals($expected, $actual2);
         $this->assertEquals($expected, $actual3);
+        $this->assertEquals($expectedHeader, $this->reader->getHeaders());
         $this->assertInstanceOf('CSanquer\ColibriCsv\CsvReader', $this->reader->close());
     }
 
@@ -686,6 +721,28 @@ class CsvReaderTest extends AbstractCsvTestCase
                     array('Petitjean', 'Inès', 'petitjean.ines@example.fr',),
                     array('Bruneau', 'Olivie', 'bruneau.olivie@example.fr',),
                 )
+            ),
+            //data set #10
+            array(
+                array(
+                    'delimiter' => ',',
+                    'enclosure' => '"',
+                    'encoding' => 'UTF-8',
+                    'eol' => "\n",
+                    'escape' => "\\",
+                    'bom' => false,
+                    'translit' => 'translit',
+                    'force_encoding_detect' => false,
+                    'skip_empty' => false,
+                    'trim' => false,
+                    'first_row_header' => true,
+                ),
+                __DIR__.'/Fixtures/test8.csv',
+                array(
+                    array('nom' => 'Martin', 'prénom' => 'Durand', 'desc' => 'test" a', 'age' => '28'),
+                    array('nom' => 'Alain', 'prénom' => 'Richard', 'desc' => 'test"" b', 'age' => '36'),
+                ),
+                array('nom', 'prénom', 'desc', 'age'),
             ),
         );
     }

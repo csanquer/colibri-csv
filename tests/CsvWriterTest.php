@@ -75,6 +75,22 @@ class CsvWriterTest extends AbstractCsvTestCase
                     'eol' => "\n",
                     'escape' => "\\",
                     'enclosing_mode' => Dialect::ENCLOSING_MINIMAL,
+                    'escape_double' => true,
+                    'first_row_header' => true,
+                ),
+                __DIR__.'/Fixtures/testWrite0.csv',
+                array('nom' => 'Martin', 'prénom' => 'Durand', 'desc' => 'test " abc', 'age' => '28,5'),
+                'nom,prénom,desc,age'."\n".
+                'Martin,Durand,"test "" abc","28,5"'."\n",
+            ),
+            array(
+                array(
+                    'delimiter' => ',',
+                    'enclosure' => '"',
+                    'encoding' => 'UTF-8',
+                    'eol' => "\n",
+                    'escape' => "\\",
+                    'enclosing_mode' => Dialect::ENCLOSING_MINIMAL,
                     'escape_double' => false,
                 ),
                 __DIR__.'/Fixtures/testWrite0.csv',
@@ -229,6 +245,27 @@ class CsvWriterTest extends AbstractCsvTestCase
                 'Martin,Durand,"28,5","\"5\'10\"\"'."\n".
                 ' tall"'."\n".
                 'Alain,Richard,36,"\"5\'30\"\""'."\n",
+            ),
+            // Data set #2
+            array(
+                array(
+                    'delimiter' => ',',
+                    'enclosure' => '"',
+                    'encoding' => 'UTF-8',
+                    'enclosing_mode' => Dialect::ENCLOSING_MINIMAL,
+                    'escape_double' => true,
+                    'eol' => "\n",
+                    'escape' => "\\",
+                    'first_row_header' => true,
+                ),
+                __DIR__.'/Fixtures/testWrite4.csv',
+                array(
+                    array('nom' => 'Martin', 'prénom' => 'Durand', 'age' => '28', 'desc'=> '"5\'10""'),
+                    array('nom' => 'Alain', 'prénom' => 'Richard', 'age' => '36,5', 'desc'=> '"5\'30""'),
+                ),
+                'nom,prénom,age,desc'."\n".
+                'Martin,Durand,28,"""5\'10"""""'."\n".
+                'Alain,Richard,"36,5","""5\'30"""""'."\n",
             ),
         );
     }

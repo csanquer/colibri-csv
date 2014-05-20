@@ -19,6 +19,7 @@ class CsvWriter extends AbstractCsv
      * - encoding : (default = 'CP1252')
      * - eol : (default = "\r\n")
      * - escape : (default = "\\")
+     * - first_row_header : (default = false) use the PHP keys as CSV headers and write the first row with them
      * - bom : (default = false)  add UTF8 BOM marker
      * - translit : (default = 'translit')  iconv translit option possible values : 'translit', 'ignore', null
      * - trim : (default = false) trim each values on each line
@@ -151,6 +152,11 @@ class CsvWriter extends AbstractCsv
     public function writeRow(array $values)
     {
         $this->openFile($this->fileHandlerMode);
+        
+        if ($this->dialect->getFirstRowHeader() && empty($this->headers)) {
+            $this->headers = array_keys($values);
+            $this->write($this->getFileHandler(), $this->headers);
+        }
 
         return $this->write($this->getFileHandler(), $values);
     }

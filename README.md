@@ -55,6 +55,7 @@ Instanciate a new CSVReader with the following CSV parameters:
 * character encoding = (default for Excel = CP1252 )
 * end of line character (default for Excel = "\r\n" )
 * escape character (default for Excel = "\\" )
+* first_row_header : (default for excel = false) use the first CSV row as header
 * UTF8 BOM (default false) force removing BOM
 * transliteration (default for Excel = null ) available options : 'translit', 'ignore', null
 * force encoding detection (default for Excel = false )
@@ -72,6 +73,7 @@ $reader = new CsvReader(array(
     'encoding' => 'CP1252', 
     'eol' => "\r\n", 
     'escape' => "\\", 
+    'first_row_header' => false,
     'bom' => false, 
     'translit' => 'translit',
     'force_encoding_detect' => false,
@@ -113,6 +115,7 @@ Instanciate a new CSVWriter with the following CSV parameters:
 * character encoding = (default for Excel = CP1252 ) 
 * end of line character (default for Excel = "\r\n" )
 * escape character (default for Excel = "\\" )
+* first_row_header : (default for excel = false) use the PHP keys as CSV headers and write a first row with them
 * enclosing_mode (default = 'minimal'), possible values :
   * all : always enclose string
   * minimal : enclose string only if the delimiter, enclosure or line ending character is present
@@ -136,6 +139,7 @@ $writer = new CsvWriter(array(
     'escape' => "\\", 
     'bom' => false, 
     'translit' => 'translit',
+    'first_row_header' => false,
     'trim' => false,
 ));
 

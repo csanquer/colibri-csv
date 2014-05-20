@@ -39,6 +39,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
      * - encoding : (default = 'CP1252')
      * - eol : (default = "\r\n")
      * - escape : (default = "\\")
+     * - first_row_header : (default = false) use the first CSV row as header
      * - bom : (default = false)  add UTF8 BOM marker
      * - translit : (default = 'translit')  iconv translit option possible values : 'translit', 'ignore', null
      * - force_encoding_detect : (default = false)
@@ -146,6 +147,10 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
             }
         }
 
+        if ($this->dialect->getFirstRowHeader() && !empty($this->headers) && !empty($row)) {
+            $row = array_combine($this->headers, $row);
+        }
+        
         return $row;
     }
 
@@ -235,6 +240,14 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
             rewind($this->getFileHandler());
 
             $this->position = -1;
+            
+            if ($this->dialect->getFirstRowHeader()) {
+                $this->position++;
+                $this->headers = [];
+                $this->currentValues = null;
+                $this->headers = array_map('trim', $this->readLine($this->getFileHandler()));
+            }
+            
             $this->next();
         }
     }
@@ -282,6 +295,10 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
             }
         }
 
+        if ($this->dialect->getFirstRowHeader() && $count > 0) {
+            --$count;
+        }
+        
         return $count;
     }
 }

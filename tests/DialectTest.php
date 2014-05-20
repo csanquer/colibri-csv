@@ -52,6 +52,7 @@ class DialectTest extends AbstractCsvTestCase
                     'force_encoding_detection' => false,
                     'skip_empty_lines' => false,
                     'trim' => false,
+                    'first_row_header' => false,
                 ),
             ),
             array(
@@ -66,6 +67,7 @@ class DialectTest extends AbstractCsvTestCase
                     'force_encoding_detection' => false,
                     'skip_empty' => true,
                     'trim' => true,
+                    'first_row_header' => true,
                 ),
                 array(
                     'delimiter' => ',',
@@ -78,6 +80,7 @@ class DialectTest extends AbstractCsvTestCase
                     'force_encoding_detection' => false,
                     'skip_empty_lines' => true,
                     'trim' => true,
+                    'first_row_header' => true,
                 ),
             ),
         );
@@ -113,6 +116,7 @@ class DialectTest extends AbstractCsvTestCase
                     'force_encoding_detection' => false,
                     'skip_empty_lines' => false,
                     'trim' => false,
+                    'first_row_header' => false,
                 ),
             ),
             array(
@@ -129,6 +133,7 @@ class DialectTest extends AbstractCsvTestCase
                     'force_encoding_detection' => false,
                     'skip_empty_lines' => false,
                     'trim' => false,
+                    'first_row_header' => false,
                 ),
             ),
         );
@@ -160,6 +165,7 @@ class DialectTest extends AbstractCsvTestCase
                     'force_encoding_detect' => false,
                     'skip_empty' => false,
                     'trim' => false,
+                    'first_row_header' => false,
                 ),
             ),
             array(
@@ -177,6 +183,7 @@ class DialectTest extends AbstractCsvTestCase
                     'force_encoding_detect' => false,
                     'skip_empty' => false,
                     'trim' => false,
+                    'first_row_header' => false,
                 ),
             ),
         );
@@ -343,6 +350,27 @@ class DialectTest extends AbstractCsvTestCase
         );
     }
 
+    /**
+     * @dataProvider providerGetSetFirstRowHeader
+     */
+    public function testGetSetFirstRowHeader($input, $expected)
+    {
+        $this->assertInstanceOf('CSanquer\ColibriCsv\Dialect', $this->dialect->setFirstRowHeader($input));
+        $this->assertEquals($expected, $this->dialect->getFirstRowHeader());
+    }
+
+    public function providerGetSetFirstRowHeader()
+    {
+        return array(
+            array(null, false),
+            array(0, false),
+            array('', false),
+            array(false, false),
+            array(1, true),
+            array(true, true),
+        );
+    }
+    
     /**
      * @dataProvider providerGetSetUseBom
      */

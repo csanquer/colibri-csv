@@ -25,6 +25,7 @@ class Dialect
             'bom' => false,
             'translit' => 'translit',
             'force_encoding_detect' => false,
+            'first_row_header' => false,
             'skip_empty' => false,
             'trim' => false,
         ),
@@ -39,6 +40,7 @@ class Dialect
             'bom' => false,
             'translit' => 'translit',
             'force_encoding_detect' => false,
+            'first_row_header' => false,
             'skip_empty' => false,
             'trim' => false,
         ),
@@ -102,6 +104,12 @@ class Dialect
      *
      * @var bool
      */
+    protected $firstRowHeader = false;
+    
+    /**
+     *
+     * @var bool
+     */
     protected $trim = false;
 
         /**
@@ -123,6 +131,7 @@ class Dialect
      * - encoding : (default = 'CP1252')
      * - eol : (default = "\r\n")
      * - escape : (default = "\\")
+     * - first_row_header : (default = false) use the first CSV row as header
      * - bom : (default = false)  add UTF8 BOM marker
      * - translit : (default = 'translit')  iconv translit option possible values : 'translit', 'ignore', null
      * - force_encoding_detect : (default = false)
@@ -156,6 +165,7 @@ class Dialect
         $this->setTranslit($options['translit']);
         $this->setUseBom($options['bom']);
         $this->setTrim($options['trim']);
+        $this->setFirstRowHeader($options['first_row_header']);
         $this->setForceEncodingDetection($options['force_encoding_detect']);
         $this->setSkipEmptyLines($options['skip_empty']);
     }
@@ -453,6 +463,30 @@ class Dialect
     {
         $this->trim = (bool) $trim;
 
+        return $this;
+    }
+    
+    /**
+     * use first row as header
+     * 
+     * @return bool
+     */
+    public function getFirstRowHeader()
+    {
+        return $this->firstRowHeader;
+    }
+
+    /**
+     * use first row as header
+     * 
+     * @param bool $firstRowHeader
+     * 
+     * @return Dialect
+     */
+    public function setFirstRowHeader($firstRowHeader)
+    {
+        $this->firstRowHeader = (bool) $firstRowHeader;
+        
         return $this;
     }
 
