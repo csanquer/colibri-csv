@@ -243,7 +243,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
             
             if ($this->dialect->getFirstRowHeader()) {
                 $this->position++;
-                $this->headers = [];
+                $this->headers = array();
                 $this->currentValues = null;
                 $this->headers = array_map('trim', $this->readLine($this->getFileHandler()));
             }

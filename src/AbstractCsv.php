@@ -48,7 +48,7 @@ abstract class AbstractCsv
      * 
      * @var array
      */
-    protected $headers = [];
+    protected $headers = array();
     
     /**
      *

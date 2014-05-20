@@ -257,7 +257,7 @@ class CsvReaderTest extends AbstractCsvTestCase
     /**
      * @dataProvider providerReading
      */
-    public function testReading($options, $filename, $expected, $expectedHeader = [])
+    public function testReading($options, $filename, $expected, $expectedHeader = array())
     {
         $this->reader = new CsvReader($options);
         $this->assertInstanceOf('CSanquer\ColibriCsv\CsvReader', $this->reader->open($filename));
