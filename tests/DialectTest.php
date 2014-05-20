@@ -1,6 +1,6 @@
 <?php
 
-namespace CSanquer\ColibriCsv\Tests\Csv;
+namespace CSanquer\ColibriCsv\Tests;
 
 use Doctrine\Common\Inflector\Inflector;
 use CSanquer\ColibriCsv\Dialect;

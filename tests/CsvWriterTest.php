@@ -1,6 +1,6 @@
 <?php
 
-namespace CSanquer\ColibriCsv\Tests\Csv;
+namespace CSanquer\ColibriCsv\Tests;
 
 use CSanquer\ColibriCsv\CsvWriter;
 use CSanquer\ColibriCsv\Dialect;
@@ -63,7 +63,7 @@ class CsvWriterTest extends AbstractCsvTestCase
                     'enclosing_mode' => Dialect::ENCLOSING_MINIMAL,
                     'escape_double' => true,
                 ),
-                __DIR__.'/../Fixtures/testWrite0.csv',
+                __DIR__.'/Fixtures/testWrite0.csv',
                 array('Martin', 'Durand', 'test " abc', '28,5'),
                 'Martin,Durand,"test "" abc","28,5"'."\n",
             ),
@@ -77,7 +77,7 @@ class CsvWriterTest extends AbstractCsvTestCase
                     'enclosing_mode' => Dialect::ENCLOSING_MINIMAL,
                     'escape_double' => false,
                 ),
-                __DIR__.'/../Fixtures/testWrite0.csv',
+                __DIR__.'/Fixtures/testWrite0.csv',
                 array('Martin', 'Durand', 'test " abc','28,5'),
                 'Martin,Durand,"test \" abc","28,5"'."\n",
             ),
@@ -91,7 +91,7 @@ class CsvWriterTest extends AbstractCsvTestCase
                     'enclosing_mode' => Dialect::ENCLOSING_ALL,
                     'escape_double' => true,
                 ),
-                __DIR__.'/../Fixtures/testWrite0.csv',
+                __DIR__.'/Fixtures/testWrite0.csv',
                 array('Martin', 'Durand', '28.5'),
                 '"Martin","Durand","28.5"'."\n",
             ),
@@ -105,7 +105,7 @@ class CsvWriterTest extends AbstractCsvTestCase
                     'enclosing_mode' => Dialect::ENCLOSING_NONNUMERIC,
                     'escape_double' => true,
                 ),
-                __DIR__.'/../Fixtures/testWrite0.csv',
+                __DIR__.'/Fixtures/testWrite0.csv',
                 array('Martin', 'Durand', '28.5'),
                 '"Martin","Durand",28.5'."\n",
             ),
@@ -120,7 +120,7 @@ class CsvWriterTest extends AbstractCsvTestCase
                     'enclosing_mode' => Dialect::ENCLOSING_MINIMAL,
                     'escape_double' => true,
                 ),
-                __DIR__.'/../Fixtures/testWrite1.csv',
+                __DIR__.'/Fixtures/testWrite1.csv',
                 array('  Martin ', 'Durand  ', '  28,5'),
                 'Martin,Durand,"28,5"'."\n",
             ),
@@ -134,7 +134,7 @@ class CsvWriterTest extends AbstractCsvTestCase
                     'enclosing_mode' => Dialect::ENCLOSING_MINIMAL,
                     'escape_double' => true,
                 ),
-                __DIR__.'/../Fixtures/testWrite2.csv',
+                __DIR__.'/Fixtures/testWrite2.csv',
                 array('Gauthier', 'Aurélie', '24'),
                 mb_convert_encoding('Gauthier;Aurélie;24'."\r\n", 'CP1252', 'UTF-8'),
             ),
@@ -176,7 +176,7 @@ class CsvWriterTest extends AbstractCsvTestCase
                     'eol' => "\n",
                     'escape' => "\\",
                 ),
-                __DIR__.'/../Fixtures/testWrite3.csv',
+                __DIR__.'/Fixtures/testWrite3.csv',
                 array(
                     array('nom', 'prénom', 'age'),
                     array('Martin', 'Durand', '28,5'),
@@ -197,7 +197,7 @@ class CsvWriterTest extends AbstractCsvTestCase
                     'eol' => "\n",
                     'escape' => "\\",
                 ),
-                __DIR__.'/../Fixtures/testWrite4.csv',
+                __DIR__.'/Fixtures/testWrite4.csv',
                 array(
                     array('nom', 'prénom', 'age','desc'),
                     array('Martin', 'Durand', '28', '"5\'10""'),
@@ -218,7 +218,7 @@ class CsvWriterTest extends AbstractCsvTestCase
                     'enclosing_mode' => Dialect::ENCLOSING_MINIMAL,
                     'escape_double' => false,
                 ),
-                __DIR__.'/../Fixtures/testWrite4.csv',
+                __DIR__.'/Fixtures/testWrite4.csv',
                 array(
                     array('nom', 'prénom', 'age','desc'),
                     array('Martin', 'Durand', '28,5', '"5\'10""
@@ -284,17 +284,17 @@ class CsvWriterTest extends AbstractCsvTestCase
         return array(
             array(
                 array('UTF-8', true),
-                __DIR__.'/../Fixtures/testWriteBom1.csv',
+                __DIR__.'/Fixtures/testWriteBom1.csv',
                 "\xEF\xBB\xBF",
             ),
             array(
                 array('UTF-8', false),
-                __DIR__.'/../Fixtures/testWriteBom2.csv',
+                __DIR__.'/Fixtures/testWriteBom2.csv',
                 '',
             ),
             array(
                 array('CP1252', true),
-                __DIR__.'/../Fixtures/testWriteBom3.csv',
+                __DIR__.'/Fixtures/testWriteBom3.csv',
                 '',
             ),
         );
@@ -302,7 +302,7 @@ class CsvWriterTest extends AbstractCsvTestCase
 
     public function testWritingExistingFileHandler()
     {
-        $filename = __DIR__.'/../Fixtures/testWriteStream1.csv';
+        $filename = __DIR__.'/Fixtures/testWriteStream1.csv';
 
         if (file_exists($filename)) {
             unlink($filename);

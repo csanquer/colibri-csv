@@ -1,6 +1,6 @@
 <?php
 
-namespace CSanquer\ColibriCsv\Tests\Csv;
+namespace CSanquer\ColibriCsv\Tests;
 
 use CSanquer\ColibriCsv\Tests\AbstractCsvTestCase;
 use CSanquer\ColibriCsv\CsvReader;
@@ -61,7 +61,7 @@ class CsvReaderTest extends AbstractCsvTestCase
             'trim' => false,
         ));
 
-        $reader->setFile(__DIR__.'/../Fixtures/test1.csv');
+        $reader->setFile(__DIR__.'/Fixtures/test1.csv');
 
         $actual = array();
         $reader->rewind();
@@ -117,7 +117,7 @@ class CsvReaderTest extends AbstractCsvTestCase
                     'skip_empty' => false,
                     'trim' => false,
                 ),
-                __DIR__.'/../Fixtures/test1.csv',
+                __DIR__.'/Fixtures/test1.csv',
                 3
             ),
             array(
@@ -133,7 +133,7 @@ class CsvReaderTest extends AbstractCsvTestCase
                     'skip_empty' => false,
                     'trim' => false,
                 ),
-                __DIR__.'/../Fixtures/test2.csv',
+                __DIR__.'/Fixtures/test2.csv',
                 4
             ),
             array(
@@ -149,7 +149,7 @@ class CsvReaderTest extends AbstractCsvTestCase
                     'skip_empty' => true,
                     'trim' => false,
                 ),
-                __DIR__.'/../Fixtures/test3.csv',
+                __DIR__.'/Fixtures/test3.csv',
                 3
             ),
             array(
@@ -165,7 +165,7 @@ class CsvReaderTest extends AbstractCsvTestCase
                     'skip_empty' => true,
                     'trim' => false,
                 ),
-                __DIR__.'/../Fixtures/test4.csv',
+                __DIR__.'/Fixtures/test4.csv',
                 4
             ),
             array(
@@ -181,7 +181,7 @@ class CsvReaderTest extends AbstractCsvTestCase
                     'skip_empty' => true,
                     'trim' => false,
                 ),
-                __DIR__.'/../Fixtures/test5_bom.csv',
+                __DIR__.'/Fixtures/test5_bom.csv',
                 3
             ),
             array(
@@ -197,7 +197,7 @@ class CsvReaderTest extends AbstractCsvTestCase
                     'skip_empty' => true,
                     'trim' => false,
                 ),
-                __DIR__.'/../Fixtures/test6.csv',
+                __DIR__.'/Fixtures/test6.csv',
                 3
             ),
             array(
@@ -214,7 +214,7 @@ class CsvReaderTest extends AbstractCsvTestCase
                     'skip_empty' => false,
                     'trim' => false,
                 ),
-                __DIR__.'/../Fixtures/test7.csv',
+                __DIR__.'/Fixtures/test7.csv',
                 4
             ),
         );
@@ -266,7 +266,7 @@ class CsvReaderTest extends AbstractCsvTestCase
                     'skip_empty' => false,
                     'trim' => false,
                 ),
-                __DIR__.'/../Fixtures/test1.csv',
+                __DIR__.'/Fixtures/test1.csv',
                 array(
                     array('nom', 'prénom', 'age'),
                     array('Martin', 'Durand', '28'),
@@ -287,7 +287,7 @@ class CsvReaderTest extends AbstractCsvTestCase
                     'skip_empty' => false,
                     'trim' => false,
                 ),
-                __DIR__.'/../Fixtures/test2.csv',
+                __DIR__.'/Fixtures/test2.csv',
                 array(
                     array('nom', 'prénom', 'age'),
                     array('Bousquet', 'Inès', '32'),
@@ -309,7 +309,7 @@ class CsvReaderTest extends AbstractCsvTestCase
                     'skip_empty' => false,
                     'trim' => false,
                 ),
-                __DIR__.'/../Fixtures/test2.csv',
+                __DIR__.'/Fixtures/test2.csv',
                 array(
                     array('nom', 'prénom', 'age'),
                     array('Bousquet', 'Inès', '32'),
@@ -331,7 +331,7 @@ class CsvReaderTest extends AbstractCsvTestCase
                     'skip_empty' => true,
                     'trim' => false,
                 ),
-                __DIR__.'/../Fixtures/test3.csv',
+                __DIR__.'/Fixtures/test3.csv',
                 array(
                     array('nom', 'prénom', 'age'),
                     array('Martin', 'Durand', '28'),
@@ -352,7 +352,7 @@ class CsvReaderTest extends AbstractCsvTestCase
                     'skip_empty' => true,
                     'trim' => false,
                 ),
-                __DIR__.'/../Fixtures/test4.csv',
+                __DIR__.'/Fixtures/test4.csv',
                 array(
                     array('nom', 'prénom', 'age'),
                     array('Martin', 'Durand', '28'),
@@ -374,7 +374,7 @@ class CsvReaderTest extends AbstractCsvTestCase
                     'skip_empty' => false,
                     'trim' => false,
                 ),
-                __DIR__.'/../Fixtures/test5_bom.csv', //file UTF8 with BOM
+                __DIR__.'/Fixtures/test5_bom.csv', //file UTF8 with BOM
                 array(
                     array('nom', 'prénom', 'age'),
                     array('Martin', 'Durand', '28'),
@@ -395,7 +395,7 @@ class CsvReaderTest extends AbstractCsvTestCase
                     'skip_empty' => true,
                     'trim' => false,
                 ),
-                __DIR__.'/../Fixtures/test6.csv',
+                __DIR__.'/Fixtures/test6.csv',
                 array(
                     array('nom', 'prénom', 'age'),
                     array('Martin', 'Durand', '28'),
@@ -416,7 +416,7 @@ class CsvReaderTest extends AbstractCsvTestCase
                     'skip_empty' => true,
                     'trim' => true,
                 ),
-                __DIR__.'/../Fixtures/test6.csv',
+                __DIR__.'/Fixtures/test6.csv',
                 array(
                     array('nom', 'prénom', 'age'),
                     array('Martin', 'Durand', '28'),
@@ -438,7 +438,7 @@ class CsvReaderTest extends AbstractCsvTestCase
                     'skip_empty' => false,
                     'trim' => false,
                 ),
-                __DIR__.'/../Fixtures/test7.csv',
+                __DIR__.'/Fixtures/test7.csv',
                 array(
                     array('nom', 'prénom', 'desc', 'age'),
                     array('Martin', 'Durand
@@ -461,7 +461,7 @@ class CsvReaderTest extends AbstractCsvTestCase
                     'skip_empty' => false,
                     'trim' => false,
                 ),
-                __DIR__.'/../Fixtures/test8.csv',
+                __DIR__.'/Fixtures/test8.csv',
                 array(
                     array('nom', 'prénom', 'desc', 'age'),
                     array('Martin', 'Durand', 'test" a', '28'),
@@ -482,7 +482,7 @@ class CsvReaderTest extends AbstractCsvTestCase
                     'skip_empty' => false,
                     'trim' => false,
                 ),
-                __DIR__.'/../Fixtures/test9.csv',
+                __DIR__.'/Fixtures/test9.csv',
                 array(
                     array('nom', 'prenom', 'email'),
                     array('Ledoux', 'Patrick', 'ledoux.patrick@example.com'),
@@ -779,7 +779,7 @@ CSV;
      */
     public function testReadingExistingFileHandlerWithInvalidMode()
     {
-        $filename = __DIR__.'/../Fixtures/testReadStream1.csv';
+        $filename = __DIR__.'/Fixtures/testReadStream1.csv';
 
         if (file_exists($filename)) {
             unlink($filename);

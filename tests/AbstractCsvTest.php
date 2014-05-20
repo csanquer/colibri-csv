@@ -1,6 +1,6 @@
 <?php
 
-namespace CSanquer\ColibriCsv\Tests\Csv;
+namespace CSanquer\ColibriCsv\Tests;
 
 use CSanquer\ColibriCsv\AbstractCsv;
 use CSanquer\ColibriCsv\Dialect;
@@ -60,7 +60,7 @@ class AbstractCsvTest extends AbstractCsvTestCase
         return array(
             array(null, null),
             array('', ''),
-            array(__DIR__.'/../Fixtures/test1.csv', __DIR__.'/../Fixtures/test1.csv', false),
+            array(__DIR__.'/Fixtures/test1.csv', __DIR__.'/Fixtures/test1.csv', false),
         );
     }
 
@@ -76,14 +76,14 @@ class AbstractCsvTest extends AbstractCsvTestCase
 
     public function testGetSetFilename()
     {
-        $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->setFilename(__DIR__.'/../Fixtures/test1.csv'));
-        $this->assertEquals(__DIR__.'/../Fixtures/test1.csv', $this->structure->getFilename());
+        $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->setFilename(__DIR__.'/Fixtures/test1.csv'));
+        $this->assertEquals(__DIR__.'/Fixtures/test1.csv', $this->structure->getFilename());
     }
 
     public function testOpen()
     {
         $this->assertFalse($this->structure->isFileOpened());
-        $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open(__DIR__.'/../Fixtures/test1.csv'));
+        $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open(__DIR__.'/Fixtures/test1.csv'));
         $this->assertTrue($this->structure->isFileOpened());
         $this->assertInternalType('resource', $this->structure->getFileHandler());
 
@@ -93,7 +93,7 @@ class AbstractCsvTest extends AbstractCsvTestCase
     public function testOpenFilePreviouslySet()
     {
         $this->assertFalse($this->structure->isFileOpened());
-        $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->setFile(__DIR__.'/../Fixtures/test1.csv'));
+        $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->setFile(__DIR__.'/Fixtures/test1.csv'));
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open());
         $this->assertTrue($this->structure->isFileOpened());
         $this->assertInternalType('resource', $this->structure->getFileHandler());
@@ -121,8 +121,8 @@ CSV;
 
     public function testOpenNewFile()
     {
-        $file1 = __DIR__.'/../Fixtures/test1.csv';
-        $file2 = __DIR__.'/../Fixtures/test2.csv';
+        $file1 = __DIR__.'/Fixtures/test1.csv';
+        $file2 = __DIR__.'/Fixtures/test2.csv';
 
         $this->assertFalse($this->structure->isFileOpened());
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open($file1));
@@ -156,7 +156,7 @@ CSV;
      */
     public function testOpenNoExistingFile()
     {
-        $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open(__DIR__.'/../Fixtures/abc.csv'));
+        $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open(__DIR__.'/Fixtures/abc.csv'));
     }
 
     /**

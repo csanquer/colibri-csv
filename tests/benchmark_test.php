@@ -1,6 +1,6 @@
 #!/usr/bin/env php
 <?php
-include __DIR__.'/autoload.php';
+include __DIR__.'/../vendor/autoload.php';
 
 use Faker\Factory;
 use CSanquer\ColibriCsv\CsvReader;

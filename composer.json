@@ -26,6 +26,9 @@
         "satooshi/php-coveralls": "dev-master"
     },
     "autoload": {
-        "psr-0": { "CSanquer": "src/" }
+        "psr-4": { 
+            "CSanquer\\ColibriCsv\\": "src/",
+            "CSanquer\\ColibriCsv\\Tests\\": "tests/"
+        }
     }
 }
