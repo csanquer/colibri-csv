@@ -22,8 +22,7 @@
     "require-dev": {
         "symfony/stopwatch": "~2.4",
         "fzaninotto/faker": "~1.3",
-        "doctrine/inflector": "~1.0",
-        "satooshi/php-coveralls": "dev-master"
+        "doctrine/inflector": "~1.0"
     },
     "autoload": {
         "psr-4": { 
@@ -31,7 +30,9 @@
             "CSanquer\\ColibriCsv\\Tests\\": "tests/"
         }
     },
-    "branch-alias": {
-        "dev-master": "1.1.x-dev"
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.1.x-dev"
+        }
     }
 }
