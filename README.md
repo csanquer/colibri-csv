@@ -6,7 +6,7 @@ CSanquer ColibriCSV
 [![Build Status](https://travis-ci.org/csanquer/colibri-csv.png?branch=master)](https://travis-ci.org/csanquer/colibri-csv)
 [![Code Coverage](https://scrutinizer-ci.com/g/csanquer/colibri-csv/badges/coverage.png?s=b11d084db20368214c00aad6d2a434e4530c5913)](https://scrutinizer-ci.com/g/csanquer/colibri-csv/)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/csanquer/colibri-csv/badges/quality-score.png?s=909ff1ccaafc6294e4a250c71d8e85b113b4638f)](https://scrutinizer-ci.com/g/csanquer/colibri-csv/)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/d3aebf17-0abd-4b50-9439-a84c99b09773/mini.png)](https://insight.sensiolabs.com/projects/d3aebf17-0abd-4b50-9439-a84c99b09773)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/7feeab74-76c0-4404-b9d8-009d07c0f652/mini.png)](https://insight.sensiolabs.com/projects/7feeab74-76c0-4404-b9d8-009d07c0f652)
 
 [![Dependency Status](https://www.versioneye.com/user/projects/52f4e68dec1375dc7b00014d/badge.png)](https://www.versioneye.com/user/projects/52f4e68dec1375dc7b00014d)
 [![Project Status](http://stillmaintained.com/csanquer/colibri-csv.png)](http://stillmaintained.com/csanquer/colibri-csv)
