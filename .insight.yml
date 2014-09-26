@@ -227,3 +227,4 @@ rules:
         enabled: true
     xml.syntax_error:
         enabled: true
+
