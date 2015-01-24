@@ -14,7 +14,8 @@
     "prefer-stable": true,
     "require": {
         "php": ">=5.3.3",
-        "ext-mbstring": "*"
+        "ext-mbstring": "*",
+        "ddeboer/transcoder": "1.0.*"
     },
     "suggest": {
         "ext-iconv": "*"

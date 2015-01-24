@@ -2,7 +2,7 @@
 
 namespace CSanquer\ColibriCsv;
 
-use CSanquer\ColibriCsv\Utility\Converter;
+use CSanquer\ColibriCsv\Utility\Transcoder;
 
 /**
  * Common Abstract Csv
@@ -18,6 +18,11 @@ abstract class AbstractCsv
      * @var Dialect
      */
     protected $dialect;
+
+    /**
+     * @var Transcoder
+     */
+    protected $transcoder;
 
     /**
      *
@@ -59,6 +64,7 @@ abstract class AbstractCsv
     public function __construct($options = array())
     {
         $this->dialect = $options instanceof Dialect ? $options : new Dialect($options);
+        $this->transcoder = new Transcoder($this->dialect->getEncoding());
     }
 
     public function __destruct()
@@ -185,10 +191,11 @@ abstract class AbstractCsv
      */
     protected function writeBom()
     {
-        if ($this->dialect->getUseBom() && $this->dialect->getEncoding() == 'UTF-8') {
-            // Write the UTF-8 BOM code
-            if ($this->isFileOpened()) {
-                fwrite($this->fileHandler, "\xEF\xBB\xBF");
+        if ($this->dialect->getUseBom()) {
+            $bom = $this->transcoder->getBOM($this->dialect->getEncoding());
+            // Write the unicode BOM code
+            if (!empty($bom) && $this->isFileOpened()) {
+                fwrite($this->fileHandler, is_array($bom) ? $bom[0] : $bom);
             }
         }
 
@@ -203,7 +210,7 @@ abstract class AbstractCsv
      */
     protected function removeBom($str)
     {
-        return $str !== false && $this->dialect->getUseBom() ? str_replace("\xEF\xBB\xBF", '', $str) : $str;
+        return $str !== false && $this->dialect->getUseBom() ? str_replace($this->transcoder->getBOM($this->dialect->getEncoding()), '', $str) : $str;
     }
 
     /**
@@ -215,7 +222,7 @@ abstract class AbstractCsv
      */
     protected function convertEncoding($str, $from, $to)
     {
-        return $str !== false ? Converter::convertEncoding($str, $from, $to, $this->dialect->getTranslit()) : $str;
+        return $str !== false ? $this->transcoder->transcode($str, $from, $to, $this->dialect->getTranslit()) : $str;
     }
 
     /**

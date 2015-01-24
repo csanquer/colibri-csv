@@ -2,7 +2,7 @@
 
 namespace CSanquer\ColibriCsv;
 
-use CSanquer\ColibriCsv\Utility\Converter;
+use CSanquer\ColibriCsv\Utility\Transcoder;
 
 /**
  * Csv Reader
@@ -73,6 +73,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
     {
         parent::open($file);
         $this->detectEncoding();
+        $this->transcoder = new Transcoder($this->detectedEncoding);
 
         return $this;
     }
@@ -93,7 +94,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
             }
 
             if ($text !== false) {
-                $this->detectedEncoding = Converter::detectEncoding($text, $this->dialect->getEncoding());
+                $this->detectedEncoding = $this->transcoder->detectEncoding($text, $this->dialect->getEncoding());
             }
         }
     }
@@ -121,18 +122,19 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
                 $trim = $this->dialect->getTrim();
                 $translit = $this->dialect->getTranslit();
                 $detectedEncoding = $this->detectedEncoding;
+                $transcoder = $this->transcoder;
 
                 if ($this->position <= 0) {
                     $line[0] = $this->removeBom($line[0]);
                 }
 
-                $row = array_map(function ($var) use ($enclosure, $escape, $trim, $translit, $detectedEncoding) {
+                $row = array_map(function ($var) use ($enclosure, $escape, $trim, $translit, $transcoder, $detectedEncoding) {
                     // workaround when escape char is not equals to double quote
                     if ($enclosure === '"' && $escape !== $enclosure) {
                         $var = str_replace($escape.$enclosure, $enclosure, $var);
                     }
 
-                    $var = Converter::convertEncoding($var, $detectedEncoding, 'UTF-8', $translit);
+                    $var = $transcoder->transcode($var, $detectedEncoding, 'UTF-8', $translit);
 
                     return $trim ? trim($var) : $var;
                 }, $line);
