@@ -21,7 +21,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
      *
      * @var array
      */
-    private $currentValues = array();
+    private $currentValues = [];
 
     /**
      *
@@ -51,7 +51,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
      *
      * @param array $options Dialect Options to describe CSV file parameters
      */
-    public function __construct($options = array())
+    public function __construct($options = [])
     {
         parent::__construct($options);
         $this->mode = self::MODE_READING;
@@ -60,7 +60,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
 
     protected function getCompatibleFileHanderModes()
     {
-        return array('rb', 'r+b', 'w+b', 'a+b', 'x+b', 'c+b');
+        return ['rb', 'r+b', 'w+b', 'a+b', 'x+b', 'c+b'];
     }
 
     /**
@@ -184,7 +184,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
      */
     public function getRows()
     {
-        $rows = array();
+        $rows = [];
         $this->rewind();
 
         while ($this->valid()) {
@@ -245,7 +245,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
             
             if ($this->dialect->getFirstRowHeader()) {
                 $this->position++;
-                $this->headers = array();
+                $this->headers = [];
                 $this->currentValues = null;
                 $this->headers = array_map('trim', $this->readLine($this->getFileHandler()));
             }

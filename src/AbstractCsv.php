@@ -53,15 +53,15 @@ abstract class AbstractCsv
      * 
      * @var array
      */
-    protected $headers = array();
+    protected $headers = [];
     
     /**
      *
      * Default Excel configuration
      *
-     * @param Dialect|array $options default = array()
+     * @param Dialect|array $options default = []
      */
-    public function __construct($options = array())
+    public function __construct($options = [])
     {
         $this->dialect = $options instanceof Dialect ? $options : new Dialect($options);
         $this->transcoder = new Transcoder($this->dialect->getEncoding());

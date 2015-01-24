@@ -143,11 +143,11 @@ class Dialect
      *
      * @param array $options Dialect Options to describe CSV file parameters
      */
-    public function __construct($options = array())
+    public function __construct($options = [])
     {
-        $options = is_array($options) ? $options : array();
+        $options = is_array($options) ? $options : [];
 
-        $cleanedOptions = array();
+        $cleanedOptions = [];
         foreach ($options as $key => $value) {
             $cleanedOptions[strtolower($key)] = $value;
         }
@@ -179,7 +179,7 @@ class Dialect
      */
     public static function getDialectDefaultOptions($CSVType = 'excel')
     {
-        return isset(static::$defaultOptions[$CSVType]) ? static::$defaultOptions[$CSVType] : array();
+        return isset(static::$defaultOptions[$CSVType]) ? static::$defaultOptions[$CSVType] : [];
     }
 
     /**
@@ -250,7 +250,7 @@ class Dialect
     public function setTranslit($translit)
     {
         $translit = strtolower($translit);
-        $this->translit = in_array($translit, array('translit', 'ignore')) ? $translit : null;
+        $this->translit = in_array($translit, ['translit', 'ignore']) ? $translit : null;
 
         return $this;
     }
@@ -295,11 +295,11 @@ class Dialect
      */
     public function setEnclosingMode($enclosingMode)
     {
-        $this->enclosingMode = in_array($enclosingMode, array(
+        $this->enclosingMode = in_array($enclosingMode, [
             static::ENCLOSING_ALL,
             static::ENCLOSING_MINIMAL,
             static::ENCLOSING_NONNUMERIC,
-        )) ? $enclosingMode : static::ENCLOSING_MINIMAL;
+        ]) ? $enclosingMode : static::ENCLOSING_MINIMAL;
 
         return $this;
     }

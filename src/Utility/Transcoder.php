@@ -38,20 +38,23 @@ class Transcoder implements TranscoderInterface
     /**
      * @var array
      */
-    protected $bomList = array(
-        'UTF-7' =>  array(
+    protected $bomList = [
+        'UTF-7' => [
             "\x2B\x2F\76\x38",
             "\x2B\x2F\76\x39",
             "\x2B\x2F\76\x2B",
             "\x2B\x2F\76\x2F",
-        ),
+        ],
         'UTF-8' => "\xEF\xBB\xBF",
         'UTF-16BE' => "\xFE\xFF",
         'UTF-16LE' => "\xFF\xFE",
         'UTF-32BE' => "\x00\x00\xFE\xFF",
         'UTF-32LE' => "\xFF\xFE\x00\x00",
-    );
+    ];
 
+    /**
+     * @param string $defaultEncoding
+     */
     public function __construct($defaultEncoding = 'UTF-8')
     {
         $this->iconvEnabled = function_exists('iconv');
@@ -76,7 +79,7 @@ class Transcoder implements TranscoderInterface
     {
         $encoding = null;
         if (function_exists('mb_convert_encoding')) {
-            $encodingList = array(
+            $encodingList =[
                 'ASCII',
                 'UTF-8',
                 'UTF-16BE',
@@ -101,7 +104,7 @@ class Transcoder implements TranscoderInterface
                 'Windows-1252',
                 'Windows-1254',
                 'UTF-7',
-            );
+            ];
 
             $encoding = mb_detect_encoding($str, $encodingList, true);
         }
@@ -131,7 +134,7 @@ class Transcoder implements TranscoderInterface
 
             if ($this->transcoder instanceof IconvTranscoder) {
                 $iconvTranslit = strtoupper($iconvTranslit);
-                $to .= in_array($iconvTranslit, array('TRANSLIT', 'IGNORE')) ? '//'.$iconvTranslit : '';
+                $to .= in_array($iconvTranslit, ['TRANSLIT', 'IGNORE']) ? '//'.$iconvTranslit : '';
             } elseif ($this->transcoder instanceof MbTranscoder) {
                 $from = $this->getWindowsCPEncoding($from);
                 $to = $this->getWindowsCPEncoding($to);
@@ -150,6 +153,6 @@ class Transcoder implements TranscoderInterface
 
     protected function getWindowsCPEncoding($encoding)
     {
-        return in_array($encoding, array('CP1251', 'CP1252', 'CP1254')) ? 'Windows-'.substr($encoding, 2, 4) : $encoding;
+        return in_array($encoding, ['CP1251', 'CP1252', 'CP1254']) ? 'Windows-'.substr($encoding, 2, 4) : $encoding;
     }
 }

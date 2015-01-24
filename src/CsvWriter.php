@@ -28,7 +28,7 @@ class CsvWriter extends AbstractCsv
      *
      * @param array $options Dialect Options to describe CSV file parameters
      */
-    public function __construct($options = array())
+    public function __construct($options = [])
     {
         parent::__construct($options);
         $this->mode = self::MODE_WRITING;
@@ -37,7 +37,7 @@ class CsvWriter extends AbstractCsv
 
     protected function getCompatibleFileHanderModes()
     {
-        return array('wb', 'r+b', 'w+b', 'a+b', 'x+b', 'c+b');
+        return ['wb', 'r+b', 'w+b', 'a+b', 'x+b', 'c+b'];
     }
 
     /**
@@ -62,10 +62,10 @@ class CsvWriter extends AbstractCsv
      */
     public function getHttpHeaders($filename)
     {
-        return array(
+        return [
             'Content-Type' => 'application/csv',
             'Content-Disposition' => 'attachment;filename="'.$filename.'"',
-        );
+        ];
     }
 
     /**
@@ -107,12 +107,12 @@ class CsvWriter extends AbstractCsv
                     // Escape enclosures and enclosed string
                     if ($escapeDouble) {
                         // double enclosure
-                        $searches = array($enclosure);
-                        $replacements = array($enclosure.$enclosure);
+                        $searches = [$enclosure];
+                        $replacements = [$enclosure.$enclosure];
                     } else {
                         // use escape character
-                        $searches = array($enclosure);
-                        $replacements = array($escape.$enclosure);
+                        $searches = [$enclosure];
+                        $replacements = [$escape.$enclosure];
                     }
                     $clean = str_replace($searches, $replacements, $trim ? trim($var) : $var);
 

@@ -15,7 +15,7 @@ CSanquer ColibriCSV
 [![Monthly Downloads](https://poser.pugx.org/csanquer/colibri-csv/d/monthly.png)](https://packagist.org/packages/csanquer/colibri-csv)
 [![Total Downloads](https://poser.pugx.org/csanquer/colibri-csv/downloads.png)](https://packagist.org/packages/csanquer/colibri-csv)
 
-A lightweight, simple and performant CSV Reader/Writer PHP 5.3 Library, inspired from Python CSV Module.
+A lightweight, simple and performant CSV Reader/Writer PHP 5.4+ Library, inspired from Python CSV Module.
 Fully Tested, very memory efficient and able to parse/write CSV files that weigh over 100 Mb.
 
 This is a fork of [Spyrit LightCSV library](https://github.com/spyrit/LightCsv), I have developed previously in this company.
