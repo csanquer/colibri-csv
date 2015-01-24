@@ -54,15 +54,16 @@ class Transcoder implements TranscoderInterface
 
     /**
      * @param string $defaultEncoding
+     * @param bool $forceMbString
      */
-    public function __construct($defaultEncoding = 'UTF-8')
+    public function __construct($defaultEncoding = 'UTF-8', $forceMbString = false)
     {
         $this->iconvEnabled = function_exists('iconv');
         $this->mbstringEnabled = function_exists('mb_convert_encoding');
 
         $defaultEncoding = empty($defaultEncoding) ? 'UTF-8' : $defaultEncoding;
 
-        if ($this->iconvEnabled) {
+        if ($this->iconvEnabled && !$forceMbString) {
             $this->transcoder = new IconvTranscoder($defaultEncoding);
         } elseif ($this->mbstringEnabled) {
             $this->transcoder = new MbTranscoder($this->getWindowsCPEncoding($defaultEncoding));
@@ -78,7 +79,7 @@ class Transcoder implements TranscoderInterface
     public function detectEncoding($str, $fallback = 'UTF-8')
     {
         $encoding = null;
-        if (function_exists('mb_convert_encoding')) {
+        if ($this->mbstringEnabled) {
             $encodingList =[
                 'ASCII',
                 'UTF-8',
@@ -131,7 +132,6 @@ class Transcoder implements TranscoderInterface
                 $from = $this->detectEncoding($string);
             }
 
-
             if ($this->transcoder instanceof IconvTranscoder) {
                 $iconvTranslit = strtoupper($iconvTranslit);
                 $to .= in_array($iconvTranslit, ['TRANSLIT', 'IGNORE']) ? '//'.$iconvTranslit : '';
@@ -146,11 +146,23 @@ class Transcoder implements TranscoderInterface
         return $string;
     }
 
+    /**
+     * get BOM for given encoding
+     *
+     * @param string $encoding
+     * @return string BOM
+     */
     public function getBOM($encoding = 'UTF-8')
     {
         return isset($this->bomList[$encoding]) ? $this->bomList[$encoding] : null;
     }
 
+    /**
+     * get Valid Windows CP encoding name for mb_string
+     *
+     * @param $encoding
+     * @return string
+     */
     protected function getWindowsCPEncoding($encoding)
     {
         return in_array($encoding, ['CP1251', 'CP1252', 'CP1254']) ? 'Windows-'.substr($encoding, 2, 4) : $encoding;
