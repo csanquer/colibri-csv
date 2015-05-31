@@ -139,12 +139,12 @@ CSV;
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open($file2));
         $this->assertEquals($file2, $this->structure->getFilename());
         $this->assertTrue($this->structure->isFileOpened());
-        $this->assertNotInternalType('resource', $fileHandler1);
         $fileHandler2 = $this->structure->getFileHandler();
         $this->assertInternalType('resource', $fileHandler2);
 
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->close());
         $this->assertFalse($this->structure->isFileOpened());
+        $fileHandler2 = $this->structure->getFileHandler();
         $this->assertNotInternalType('resource', $fileHandler2);
     }
 
