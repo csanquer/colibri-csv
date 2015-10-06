@@ -1,5 +1,7 @@
 language: php
 
+sudo: false
+
 php:
   - 5.4
   - 5.5
@@ -10,7 +12,6 @@ php:
 matrix:
   allow_failures:
     - php: hhvm
-    - php: 7.0
 
 before_script:
   - curl -s http://getcomposer.org/installer | php
