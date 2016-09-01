@@ -1,6 +1,8 @@
 CSanquer ColibriCSV
 ===================
 
+**LOOKING FOR NEW MAINTAINER**
+
 [![Latest Stable Version](https://poser.pugx.org/csanquer/colibri-csv/v/stable.png)](https://packagist.org/packages/csanquer/colibri-csv)
 [![Latest Unstable Version](https://poser.pugx.org/csanquer/colibri-csv/v/unstable.png)](https://packagist.org/packages/csanquer/colibri-csv)
 [![Build Status](https://travis-ci.org/csanquer/colibri-csv.png?branch=master)](https://travis-ci.org/csanquer/colibri-csv)
@@ -9,7 +11,6 @@ CSanquer ColibriCSV
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/7feeab74-76c0-4404-b9d8-009d07c0f652/mini.png)](https://insight.sensiolabs.com/projects/7feeab74-76c0-4404-b9d8-009d07c0f652)
 
 [![Dependency Status](https://www.versioneye.com/user/projects/52f4e68dec1375dc7b00014d/badge.png)](https://www.versioneye.com/user/projects/52f4e68dec1375dc7b00014d)
-[![Project Status](http://stillmaintained.com/csanquer/colibri-csv.png)](http://stillmaintained.com/csanquer/colibri-csv)
 [![License](https://poser.pugx.org/csanquer/colibri-csv/license.png)](https://packagist.org/packages/csanquer/colibri-csv)
 [![Daily Downloads](https://poser.pugx.org/csanquer/colibri-csv/d/daily.png)](https://packagist.org/packages/csanquer/colibri-csv)
 [![Monthly Downloads](https://poser.pugx.org/csanquer/colibri-csv/d/monthly.png)](https://packagist.org/packages/csanquer/colibri-csv)
