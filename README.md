@@ -10,8 +10,8 @@ CSanquer ColibriCSV
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/csanquer/colibri-csv/badges/quality-score.png?s=909ff1ccaafc6294e4a250c71d8e85b113b4638f)](https://scrutinizer-ci.com/g/csanquer/colibri-csv/)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/7feeab74-76c0-4404-b9d8-009d07c0f652/mini.png)](https://insight.sensiolabs.com/projects/7feeab74-76c0-4404-b9d8-009d07c0f652)
 
-[![Dependency Status](https://www.versioneye.com/user/projects/52f4e68dec1375dc7b00014d/badge.png)](https://www.versioneye.com/user/projects/52f4e68dec1375dc7b00014d)
 [![License](https://poser.pugx.org/csanquer/colibri-csv/license.png)](https://packagist.org/packages/csanquer/colibri-csv)
+[![Maintenance](https://img.shields.io/maintenance/yes/2015.svg)]()
 [![Daily Downloads](https://poser.pugx.org/csanquer/colibri-csv/d/daily.png)](https://packagist.org/packages/csanquer/colibri-csv)
 [![Monthly Downloads](https://poser.pugx.org/csanquer/colibri-csv/d/monthly.png)](https://packagist.org/packages/csanquer/colibri-csv)
 [![Total Downloads](https://poser.pugx.org/csanquer/colibri-csv/downloads.png)](https://packagist.org/packages/csanquer/colibri-csv)
