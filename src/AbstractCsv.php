@@ -235,11 +235,14 @@ abstract class AbstractCsv
     protected function openFile($mode = 'rb')
     {
         if (!$this->isFileOpened()) {
+            if (!$this->filename) {
+                throw new \InvalidArgumentException('Could not open file "'.$this->filename.'" for '. $this->getModeLabel() .'.');
+            }
+
             $mode = empty($mode) ? 'rb' : $mode;
             $this->fileHandler = @fopen($this->filename, $mode);
             if (!$this->isFileOpened()) {
-                $modeLabel = $this instanceof CsvReader ? self::MODE_READING : self::MODE_WRITING;
-                throw new \InvalidArgumentException('Could not open file "'.$this->filename.'" for '.$modeLabel.'.');
+                throw new \InvalidArgumentException('Could not open file "'.$this->filename.'" for '. $this->getModeLabel() .'.');
             }
         }
 
@@ -342,5 +345,10 @@ abstract class AbstractCsv
         $this->closeFile();
 
         return $this;
+    }
+
+    private function getModeLabel(): string
+    {
+        return $this instanceof CsvReader ? self::MODE_READING : self::MODE_WRITING;
     }
 }

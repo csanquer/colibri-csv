@@ -3,8 +3,9 @@
 namespace CSanquer\ColibriCsv\Tests\Utility;
 
 use CSanquer\ColibriCsv\Utility\Transcoder;
+use PHPUnit\Framework\TestCase;
 
-class TranscoderTest extends \PHPUnit_Framework_TestCase
+class TranscoderTest extends TestCase
 {
 
     /**

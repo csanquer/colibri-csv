@@ -4,6 +4,7 @@ namespace CSanquer\ColibriCsv\Tests;
 
 use CSanquer\ColibriCsv\Tests\AbstractCsvTestCase;
 use CSanquer\ColibriCsv\CsvReader;
+use InvalidArgumentException;
 
 /**
  * CsvReaderTest
@@ -18,7 +19,7 @@ class CsvReaderTest extends AbstractCsvTestCase
      */
     protected $reader;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->reader = new CsvReader();
     }
@@ -28,12 +29,10 @@ class CsvReaderTest extends AbstractCsvTestCase
         $this->assertEquals('rb', $this->getFileHandlerModeValue($this->reader));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Could not open file "" for reading.
-     */
     public function testReadingNoFilename()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Could not open file "" for reading.');
         $actual = array();
         foreach ($this->reader as $key => $value) {
             $actual[] = $value;
@@ -73,21 +72,17 @@ class CsvReaderTest extends AbstractCsvTestCase
         $this->assertEquals($expected, $actual);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage A valid file handler resource must be passed as parameter.
-     */
     public function testReadingNoFileHandler()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('A valid file handler resource must be passed as parameter.');
         $this->reader->next();
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The file "foobar.csv" does not exists.
-     */
     public function testReadingFilenameInvalid()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The file "foobar.csv" does not exists.');
         $this->reader->open('foobar.csv');
     }
 
@@ -776,7 +771,7 @@ CSV;
         $this->assertFalse($reader->isFileOpened());
         $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvReader', $reader->createTempStream($csv));
         $this->assertTrue($reader->isFileOpened());
-        $this->assertInternalType('resource', $reader->getFileHandler());
+        $this->assertIsResource($reader->getFileHandler());
 
         $actual = array();
         foreach ($reader as $row) {
@@ -820,7 +815,7 @@ CSV;
         $this->assertFalse($reader->isFileOpened());
         $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvReader', $reader->open($stream));
         $this->assertTrue($reader->isFileOpened());
-        $this->assertInternalType('resource', $reader->getFileHandler());
+        $this->assertIsResource($reader->getFileHandler());
 
         $actual = array();
         foreach ($reader as $row) {
@@ -830,12 +825,11 @@ CSV;
         $this->assertEquals($expected, $actual);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The file handler mode "wb" is not valid. Allowed modes : "rb", "r+b", "w+b", "a+b", "x+b", "c+b".
-     */
     public function testReadingExistingFileHandlerWithInvalidMode()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The file handler mode "wb" is not valid. Allowed modes : "rb", "r+b", "w+b", "a+b", "x+b", "c+b".');
+
         $filename = __DIR__.'/Fixtures/testReadStream1.csv';
 
         if (file_exists($filename)) {

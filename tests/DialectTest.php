@@ -19,7 +19,7 @@ class DialectTest extends AbstractCsvTestCase
      */
     protected $dialect;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->dialect = new Dialect();
     }

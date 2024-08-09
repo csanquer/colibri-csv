@@ -5,6 +5,7 @@ namespace CSanquer\ColibriCsv\Tests;
 use CSanquer\ColibriCsv\AbstractCsv;
 use CSanquer\ColibriCsv\Dialect;
 use CSanquer\ColibriCsv\Tests\AbstractCsvTestCase;
+use InvalidArgumentException;
 
 /**
  * AbstractCsvTest
@@ -19,7 +20,7 @@ class AbstractCsvTest extends AbstractCsvTestCase
      */
     protected $structure;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->structure = $this->getMockForAbstractClass('CSanquer\ColibriCsv\AbstractCsv');
         $this->structure->expects($this->any())
@@ -51,7 +52,7 @@ class AbstractCsvTest extends AbstractCsvTestCase
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->setFile($input));
         $this->assertEquals($expected, $this->structure->getFilename());
         if ($expectedResource) {
-            $this->assertInternalType('resource', $this->structure->getFileHandler());
+            $this->assertIsResource($this->structure->getFileHandler());
         }
     }
 
@@ -68,15 +69,12 @@ class AbstractCsvTest extends AbstractCsvTestCase
     {
         $this->assertEquals(array(), $this->structure->getHeaders());
     }
-    
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage
-     */
+
     public function testSetFileWithIncorrectResource()
     {
-        $xmlParser = xml_parser_create();
-        $this->structure->setFile($xmlParser);
+        $this->expectException(InvalidArgumentException::class);
+        $context = stream_context_create();
+        $this->structure->setFile($context);
     }
 
     public function testGetSetFilename()
@@ -90,7 +88,7 @@ class AbstractCsvTest extends AbstractCsvTestCase
         $this->assertFalse($this->structure->isFileOpened());
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open(__DIR__.'/Fixtures/test1.csv'));
         $this->assertTrue($this->structure->isFileOpened());
-        $this->assertInternalType('resource', $this->structure->getFileHandler());
+        $this->assertIsResource($this->structure->getFileHandler());
 
         return $this->structure;
     }
@@ -101,7 +99,7 @@ class AbstractCsvTest extends AbstractCsvTestCase
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->setFile(__DIR__.'/Fixtures/test1.csv'));
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open());
         $this->assertTrue($this->structure->isFileOpened());
-        $this->assertInternalType('resource', $this->structure->getFileHandler());
+        $this->assertIsResource($this->structure->getFileHandler());
     }
 
     public function testOpenFileHandler()
@@ -119,7 +117,7 @@ CSV;
         $this->assertFalse($this->structure->isFileOpened());
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open($stream));
         $this->assertTrue($this->structure->isFileOpened());
-        $this->assertInternalType('resource', $this->structure->getFileHandler());
+        $this->assertIsResource($this->structure->getFileHandler());
         $this->assertEquals($csv, stream_get_contents($this->structure->getFileHandler()));
 
     }
@@ -134,33 +132,29 @@ CSV;
         $this->assertEquals($file1, $this->structure->getFilename());
         $this->assertTrue($this->structure->isFileOpened());
         $fileHandler1 = $this->structure->getFileHandler();
-        $this->assertInternalType('resource', $fileHandler1);
+        $this->assertIsResource($fileHandler1);
 
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open($file2));
         $this->assertEquals($file2, $this->structure->getFilename());
         $this->assertTrue($this->structure->isFileOpened());
         $fileHandler2 = $this->structure->getFileHandler();
-        $this->assertInternalType('resource', $fileHandler2);
+        $this->assertIsResource($fileHandler2);
 
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->close());
         $this->assertFalse($this->structure->isFileOpened());
         $fileHandler2 = $this->structure->getFileHandler();
-        $this->assertNotInternalType('resource', $fileHandler2);
+        $this->assertIsNotResource($fileHandler2);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testOpenNoFilename()
     {
+        $this->expectException(InvalidArgumentException::class);
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testOpenNoExistingFile()
     {
+        $this->expectException(InvalidArgumentException::class);
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $this->structure->open(__DIR__.'/Fixtures/abc.csv'));
     }
 
@@ -173,6 +167,6 @@ CSV;
         $this->assertTrue($structure->isFileOpened());
         $this->assertInstanceOf('CSanquer\ColibriCsv\AbstractCsv', $structure->close());
         $this->assertFalse($structure->isFileOpened());
-        $this->assertNotInternalType('resource', $structure->getFileHandler());
+        $this->assertIsNotResource($structure->getFileHandler());
     }
 }

@@ -2,5 +2,7 @@ vendor
 build
 composer.lock
 phpunit.xml
+.phpunit.cache/
+.phpunit.result.cache
 /tests/tmp
 tests/CSanquer/ColibriCsv/Tests/Fixtures/testReadStream1.csv

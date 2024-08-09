@@ -5,6 +5,7 @@ namespace CSanquer\ColibriCsv\Tests;
 use CSanquer\ColibriCsv\CsvWriter;
 use CSanquer\ColibriCsv\Dialect;
 use CSanquer\ColibriCsv\Tests\AbstractCsvTestCase;
+use InvalidArgumentException;
 
 /**
  * CsvWriterTest
@@ -19,7 +20,7 @@ class CsvWriterTest extends AbstractCsvTestCase
      */
     protected $writer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->writer = new CsvWriter();
     }
@@ -278,12 +279,11 @@ class CsvWriterTest extends AbstractCsvTestCase
         ), $this->writer->getHttpHeaders('test.csv'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Could not open file "" for writing.
-     */
     public function testWritingLineNoFilename()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Could not open file "" for writing.');
+
         $this->writer->writeRow(array('nom', 'prénom', 'age'));
     }
 
@@ -370,7 +370,7 @@ class CsvWriterTest extends AbstractCsvTestCase
         $this->assertFalse($writer->isFileOpened());
         $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvWriter', $writer->open($stream));
         $this->assertTrue($writer->isFileOpened());
-        $this->assertInternalType('resource', $writer->getFileHandler());
+        $this->assertIsResource($writer->getFileHandler());
         $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvWriter', $writer->writeRows($csvArray));
         $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvWriter', $writer->close());
 
@@ -406,7 +406,7 @@ class CsvWriterTest extends AbstractCsvTestCase
         $this->assertFalse($writer->isFileOpened());
         $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvWriter', $writer->createTempStream());
         $this->assertTrue($writer->isFileOpened());
-        $this->assertInternalType('resource', $writer->getFileHandler());
+        $this->assertIsResource($writer->getFileHandler());
         $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvWriter', $writer->writeRows($csvArray));
         $this->assertEquals($expected, $writer->getFileContent());
         $this->assertInstanceOf('CSanquer\\ColibriCsv\\CsvWriter', $writer->close());

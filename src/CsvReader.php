@@ -122,7 +122,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
             if ($line !== false) {
                 $trim = $this->dialect->getTrim();
                 $translit = $this->dialect->getTranslit();
-                $detectedEncoding = $this->detectedEncoding;
+                $detectedEncoding = $this->dialect->getEncoding();
                 $transcoder = $this->transcoder;
 
                 if ($this->position <= 0) {
