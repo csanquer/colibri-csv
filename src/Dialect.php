@@ -249,7 +249,7 @@ class Dialect
      */
     public function setTranslit($translit)
     {
-        $translit = strtolower($translit);
+        $translit = strtolower((string) $translit);
         $this->translit = in_array($translit, ['translit', 'ignore']) ? $translit : null;
 
         return $this;
