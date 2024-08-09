@@ -1,0 +1,58 @@
+name: "CI Tests"
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    name: "PHP ${{ matrix.php }} ${{ matrix.composer-flags != '' && format(' - Composer {0}', matrix.composer-flags) || '' }}"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php:
+          - '7.4'
+          - '8.0'
+          - '8.1'
+          - '8.2'
+          - '8.3'
+        composer-flags:
+          - '--prefer-stable'
+        include:
+          # Lowest Deps
+          - php: 7.4
+            composer-flags: '--prefer-stable --prefer-lowest'
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+        with:
+          fetch-depth: 2
+
+      - name: "Cache Composer packages"
+        uses: "actions/cache@v3"
+        with:
+          path: "~/.composer/cache"
+          key: "php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}-flags-${{ matrix.composer-flags }}"
+          restore-keys: "php-"
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "${{ matrix.php }}"
+          tools: "composer:v2,flex"
+
+      - name: "Set Composer stability"
+        run: "composer config minimum-stability dev"
+
+      - name: "Install dependencies"
+        run: "composer update ${{ matrix.composer-flags }} --prefer-dist"
+        env:
+          SYMFONY_REQUIRE: "${{ matrix.symfony }}"
+
+      - name: "Validate composer"
+        run: "composer validate --strict --no-check-lock --no-check-all"
+
+      - name: "Run PHPUnit Tests"
+        run: "vendor/bin/phpunit"
+
