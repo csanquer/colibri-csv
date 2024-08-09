@@ -204,7 +204,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
      *
      * aliases for iterator rewind
      */
-    public function reset()
+    public function reset(): void
     {
         $this->rewind();
     }
@@ -213,7 +213,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
      *
      * @return array
      */
-    public function current()
+    public function current(): array
     {
         return $this->currentValues;
     }
@@ -222,12 +222,12 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
      *
      * @return int
      */
-    public function key()
+    public function key(): int
     {
         return $this->position;
     }
 
-    public function next()
+    public function next(): void
     {
         $this->currentValues = $this->readLine($this->getFileHandler());
         $this->position++;
@@ -235,11 +235,9 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
         if ($this->dialect->getSkipEmptyLines() && $this->currentValues === false) {
             $this->next();
         }
-
-        return $this->currentValues;
     }
 
-    public function rewind()
+    public function rewind(): void
     {
         $this->openFile($this->fileHandlerMode);
         if ($this->isFileOpened()) {
@@ -262,12 +260,12 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
      *
      * @return bool
      */
-    public function valid()
+    public function valid(): bool
     {
         return $this->currentValues !== null;
     }
 
-    public function count()
+    public function count(): int
     {
         $count = 0;
         $this->openFile($this->fileHandlerMode);
