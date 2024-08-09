@@ -140,7 +140,7 @@ class CsvReader extends AbstractCsv implements \Iterator, \Countable
                     } catch (IllegalCharacterException $e) {
                     }
 
-                    return $trim ? trim($var) : $var;
+                    return $trim ? trim((string) $var) : $var;
                 }, $line);
 
                 $notEmptyCount = count(array_filter($row, function ($var) {
